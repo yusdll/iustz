@@ -25,6 +25,17 @@ public:
         coldWeaponSkill = rand() % 61 + 40;
     }
 
+// Setters
+    void setName(std::string _name) { name = _name; }
+    void setAge(int _age) { age = _age; }
+    void setGender(std::string _gender) { gender = _gender; }
+    void setHealth(int _health) { health = _health; }
+    void setEnergy(int _energy) { energy = _energy; }
+    void setLevel(int _level) { level = _level; }
+    void setWarmWeaponSkill(int _warmWeaponSkill) { warmWeaponSkill = _warmWeaponSkill; }
+    void setColdWeaponSkill(int _coldWeaponSkill) { coldWeaponSkill = _coldWeaponSkill; }
+
+
     // Getters
     std::string getName() const { return name; }
     int getAge() const { return age; }
@@ -35,15 +46,6 @@ public:
     int getWarmWeaponSkill() const { return warmWeaponSkill; }
     int getColdWeaponSkill() const { return coldWeaponSkill; }
 
-    // Setters
-    void setName(std::string _name) { name = _name; }
-    void setAge(int _age) { age = _age; }
-    void setGender(std::string _gender) { gender = _gender; }
-    void setHealth(int _health) { health = _health; }
-    void setEnergy(int _energy) { energy = _energy; }
-    void setLevel(int _level) { level = _level; }
-    void setWarmWeaponSkill(int _warmWeaponSkill) { warmWeaponSkill = _warmWeaponSkill; }
-    void setColdWeaponSkill(int _coldWeaponSkill) { coldWeaponSkill = _coldWeaponSkill; }
 
     // Function for decreasing the health while fighting and stuff
     void takeDamage(int damage) {
@@ -68,9 +70,11 @@ public:
         int levelsToIncrease = experience / experiencePerLevel; // Calculate that how many levels we need to increase
 
         for (int i = 0; i < levelsToIncrease; ++i) {
-            if (level < 100) // increase level only if it's less than 100
+            if (level < 100){ // increase level only if it's less than 100
                 level += 1;
-            experience -= experiencePerLevel;
+                warmWeaponSkill += 5;
+                coldWeaponSkill += 5;
+            }
         }
 
         // Ensuring that level doesn't exceed 100
@@ -103,32 +107,19 @@ public:
 };
 
 class PlayerCharacter : public Character {
-private:
+protected:
     std::string selectedWeapon; // the weapon that character selected for the player character
 
 public:
     // Constructor
     PlayerCharacter(std::string _name, int _age, std::string _gender,
         std::string _selectedWeapon)
-        : Character(_name, _age, _gender),
-        selectedWeapon(_selectedWeapon) {}
+        : Character(_name, _age, _gender), selectedWeapon(_selectedWeapon) {}
 
     // Getters and setters for this class
-    std::string getSelectedWeapon() const { return selectedWeapon; }
     void setSelectedWeapon(std::string _selectedWeapon) { selectedWeapon = _selectedWeapon; }
+    std::string getSelectedWeapon() const { return selectedWeapon; }
 
-    // Function for upgrading the character's ability
-    void upgradeAbility(std::string ability) {
-        if (ability == "warmWeaponSkill") {
-            warmWeaponSkill += 20;
-        }
-        else if (ability == "coldWeaponSkill") {
-            coldWeaponSkill += 20;
-        }
-        else {
-            std::cout << "Invalid ability!" << std::endl;
-        }
-    }
 
     // Function to switch the weapons during gameplay
     void switchWeapon(std::string newWeapon) {
@@ -143,19 +134,7 @@ public:
 
     // Function for leveling up character by experience
     void levelUpByExperience(int experience) {
-        const int experiencePerLevel = 10000;
-        int levelsToIncrease = experience / experiencePerLevel; // Calculate how many levels wee need to increase
-
-        for (int i = 0; i < levelsToIncrease; ++i) {
-            if (level < 100)
-                level += 1;
-            experience -= experiencePerLevel;
-        }
-
-        // Ensure level doesn't exceed 100
-        if (level > 100) {
-            level = 100;
-        }
+        
     }
 };
 
@@ -189,10 +168,7 @@ int main() {
     std::cin >> experience;
 
     // Level up the player character based on experience
-    player.levelUpByExperience(experience);
-
-    player.upgradeAbility("warmWeaponSkill");
-    player.upgradeAbility("coldWeaponSkill");
+    player.levelUp(experience);
 
     std::cout << "\nPlayer Character Information After Leveling Up and Ability Upgrade:" << std::endl;
     player.displayInfo();
@@ -204,4 +180,3 @@ int main() {
 
     return 0;
 }
-
