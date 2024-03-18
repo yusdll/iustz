@@ -80,8 +80,8 @@ public:
                 coldWeaponSkill += coldWeaponSkill * 0.15;
 
                 // Make sure warmWeaponSkill and coldWeaponSkill don't exceed 100
-                warmWeaponSkill += (warmIncrease > 100 - warmWeaponSkill) ? (100 - warmWeaponSkill) : warmIncrease;
-                coldWeaponSkill += (coldIncrease > 100 - coldWeaponSkill) ? (100 - coldWeaponSkill) : coldIncrease;
+                warmWeaponSkill = (warmWeaponSkill > 100) ? 100 : warmWeaponSkill;
+                coldWeaponSkill = (coldWeaponSkill > 100) ? 100 : coldWeaponSkill;
             }
         }
 
@@ -113,20 +113,19 @@ public:
         std::cout << "Cold Weapon Skill: " << coldWeaponSkill << std::endl;
     }
 };
+
 class PlayerCharacter : public Character {
 protected:
     std::string selectedWeapon; // the weapon that character selected for the player character
 
 public:
     // Constructor
-    PlayerCharacter(std::string _name, int _age, std::string _gender,
-        std::string _selectedWeapon)
+    PlayerCharacter(std::string _name, int _age, std::string _gender, std::string _selectedWeapon)
         : Character(_name, _age, _gender), selectedWeapon(_selectedWeapon) {}
 
     // Getters and setters for this class
     void setSelectedWeapon(std::string _selectedWeapon) { selectedWeapon = _selectedWeapon; }
     std::string getSelectedWeapon() const { return selectedWeapon; }
-
 
     // Function to switch the weapons during gameplay
     void switchWeapon(std::string newWeapon) {
@@ -141,11 +140,8 @@ public:
 
     // Function for leveling up character by experience
     void levelUpByExperience(int experience) {
-
     }
 };
-
-
 
 class ZombieCharacter {
 protected:
@@ -167,7 +163,41 @@ public:
     }
 };
 
+class StrongerZombieCharacter : public ZombieCharacter {
+public:
+    // Constructor
+    StrongerZombieCharacter() {
+        // setting attack power to a random number between 35 and 45
+        attackPower = rand() % 11 + 35;
+    }
 
+    // Function for attack a player
+    void attackPlayer(PlayerCharacter& player) {
+        // Reduce player's health by the attack power of the stronger zombie 
+        player.takeDamage(attackPower);
+        std::cout << "Stronger Zombie attacked Player for " << attackPower << " damage." << std::endl;
+    }
+};
+
+class RandomAttack {
+public:
+    // Function to perform random attack
+    static void performRandomAttack(PlayerCharacter& player, ZombieCharacter& zombie, StrongerZombieCharacter& strongerZombie) {
+        int randomEnemy = rand() % 2; // Randomly select an enemy to attack
+
+        if (randomEnemy == 0) {
+            // Attack the player with a zombie
+            zombie.attackPlayer(player);
+        }
+        else {
+            // Attack the player with a stronger zombie
+            strongerZombie.attackPlayer(player);
+        }
+
+        // Display player's health after the attack
+        std::cout << "Player Health: " << player.getHealth() << std::endl;
+    }
+};
 
 int main() {
     // for generating random numbers for game
@@ -212,11 +242,11 @@ int main() {
     // Creating a zombie
     ZombieCharacter zombie;
 
-    // Attack the player
-    zombie.attackPlayer(player);
+    // Creating a stronger zombie
+    StrongerZombieCharacter strongerZombie;
 
-    // Display player's health after the attack
-    std::cout << "Player Health: " << player.getHealth() << std::endl;
+    // Perform a random attack
+    RandomAttack::performRandomAttack(player, zombie, strongerZombie);
 
     return 0;
 }
