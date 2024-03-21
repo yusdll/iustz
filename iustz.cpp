@@ -188,13 +188,36 @@ public:
         if (randomEnemy == 0) {
             // Attack the player with a zombie
             zombie.attackPlayer(player);
-        } else {
+        }
+        else {
             // Attack the player with a stronger zombie
             strongerZombie.attackPlayer(player);
         }
 
         // Display player's health after the attack
         std::cout << "Player Health: " << player.getHealth() << std::endl;
+    }
+};
+
+class CharacterCreation {
+public:
+    // Function to create a new character
+    static void createCharacter(std::string& name, int& age, std::string& gender, std::string& selectedWeapon) {
+        // Get character's name
+        std::cout << "Enter character's name: \n";
+        std::cin >> name;
+
+        // Get character's age
+        std::cout << "Enter character's age: \n";
+        std::cin >> age;
+
+        // Get character's gender
+        std::cout << "Enter character's gender: \n";
+        std::cin >> gender;
+
+        // Get character's selected weapon
+        std::cout << "Enter character's selected weapon (Sword/Dagger/Shotgun/Flamethrower): \n";
+        std::cin >> selectedWeapon;
     }
 };
 
@@ -205,27 +228,21 @@ int main() {
     std::string name, gender, selectedWeapon;
     int age;
 
+    // Create a character
+    CharacterCreation::createCharacter(name, age, gender, selectedWeapon);
+
     // our unique character information
-    std::cout << "Enter character's name: \n";
-    std::cin >> name;
-
-    std::cout << "Enter character's age: \n";
-    std::cin >> age;
-
-    std::cout << "Enter character's gender: \n";
-    std::cin >> gender;
-
-    // Available weapons
-    std::cout << "Enter character's selected weapon (Sword/Dagger/Shotgun/Flamethrower): \n";
-    std::cin >> selectedWeapon;
-
-    PlayerCharacter player(name, age, gender, selectedWeapon);
-
-    std::cout << "Player Character Information: " << std::endl;
-    player.displayInfo();
+    std::cout << "Created Character Information: " << std::endl;
+    std::cout << "Name: " << name << std::endl;
+    std::cout << "Age: " << age << std::endl;
+    std::cout << "Gender: " << gender << std::endl;
+    std::cout << "Selected Weapon: " << selectedWeapon << std::endl;
 
     int experience;
     std::cin >> experience;
+
+    // Create a player character based on the entered information
+    PlayerCharacter player(name, age, gender, selectedWeapon);
 
     // Level up the player character based on experience
     player.levelUp(experience);
