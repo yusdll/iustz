@@ -170,8 +170,6 @@ class HumanEnemy : public Character {
             std::cout << "Age: " << age << std::endl;
             std::cout << "Gender: " << gender << std::endl;
             std::cout << "Health: " << health << std::endl;
-            std::cout << "Warm Weapon Skill: " << warmWeaponSkill << std::endl;
-            std::cout << "Cold Weapon Skill: " << coldWeaponSkill << std::endl;
             auto startTime = std::chrono::high_resolution_clock::now();
             std::this_thread::sleep_for(std::chrono::minutes(1/6));
             auto endTime = std::chrono::high_resolution_clock::now();
