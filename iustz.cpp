@@ -156,6 +156,43 @@ public:
     }
 };
 
+class ZombieCharacter {
+protected:
+    int health = 100;
+    int attackPower;
+
+public:
+    // Constructor
+    ZombieCharacter() {
+        // Setting the attack power to a random number between 10 and 20
+        attackPower = rand() % 11 + 10;
+    }
+
+    // Function for attack a player
+    void attackPlayer(PlayerCharacter& player) {
+        // Reduce player's health by the attack power of the zombie 
+        player.takeDamage(attackPower);
+        std::cout << "Zombie attacked Player for " << attackPower << " damage." << std::endl;
+    }
+};
+
+class StrongerZombieCharacter : public ZombieCharacter {
+public:
+    // Constructor
+    StrongerZombieCharacter() {
+        // setting attack power to a random number between 35 and 45
+        attackPower = rand() % 11 + 35;
+    }
+
+    // Function for attack a player
+    void attackPlayer(PlayerCharacter& player) {
+        // Reduce player's health by the attack power of the stronger zombie 
+        player.takeDamage(attackPower);
+        std::cout << "Stronger Zombie attacked Player for " << attackPower << " damage." << std::endl;
+    }
+};
+
+
 class HumanEnemy : public Character { 
     protected:
         int attackPower; 
@@ -189,7 +226,7 @@ class HumanEnemy : public Character {
                         std::cout<<"you won! The human enemy character was killed. "<<std::endl; }
                 }
             }else if (Techniques == ReturnAttack) {
-                player.getHealth -= player.getPlayerattackPower();
+                player.setHealth(player.getHealth() - player.getPlayerattackPower());
                 std::cout<<"oops! Human Enemy return the attack to the player with a strength of "<<player.getPlayerattackPower()<<". "<<std::endl;
             }else if (Techniques == Defense ) {
                 health = health;
@@ -337,58 +374,22 @@ class HumanEnemy : public Character {
         }
 };
 
-class ZombieCharacter {
-protected:
-    int health = 100;
-    int attackPower;
-
-public:
-    // Constructor
-    ZombieCharacter() {
-        // Setting the attack power to a random number between 10 and 20
-        attackPower = rand() % 11 + 10;
-    }
-
-    // Function for attack a player
-    void attackPlayer(PlayerCharacter& player) {
-        // Reduce player's health by the attack power of the zombie 
-        player.takeDamage(attackPower);
-        std::cout << "Zombie attacked Player for " << attackPower << " damage." << std::endl;
-    }
-};
-
-class StrongerZombieCharacter : public ZombieCharacter {
-public:
-    // Constructor
-    StrongerZombieCharacter() {
-        // setting attack power to a random number between 35 and 45
-        attackPower = rand() % 11 + 35;
-    }
-
-    // Function for attack a player
-    void attackPlayer(PlayerCharacter& player) {
-        // Reduce player's health by the attack power of the stronger zombie 
-        player.takeDamage(attackPower);
-        std::cout << "Stronger Zombie attacked Player for " << attackPower << " damage." << std::endl;
-    }
-};
-
 class RandomAttack {
 public:
     // Function to perform random attack
     static void performRandomAttack(PlayerCharacter& player, ZombieCharacter& zombie, StrongerZombieCharacter& strongerZombie,HumanEnemy& enemy) {
         int randomEnemy = rand() % 3; // Randomly select an enemy to attack
 
-        if (randomEnemy == 0 && player.getHealth()<12 ) {
+        if (randomEnemy == 0 && player.getLevel()<12 ) {
             // Attack the player with a zombie
             zombie.attackPlayer(player);
-        }else if( randomEnemy == 1 && player.getHealth()<12 ) {
+        }else if( randomEnemy == 1 && player.getLevel()<12 ) {
             // Attack the player with a stronger zombie
             strongerZombie.attackPlayer(player);
-        }else if( randomEnemy == 2 &&  player.getHealth()>=8 && player.getHealth()<12) {
+        }else if( randomEnemy == 2 &&  player.getLevel()>=8 && player.getLevel()<12) {
             // Attack the player with a Human Enemy
             enemy.attackPlayerCharacter(player,strongerZombie,zombie);
-        }else if ( player.getHealth()>=12 )
+        }else if ( player.getLevel()>=12 )
         {
             // Attack the player with a Human Enemy
             enemy.attackPlayerCharacter(player,strongerZombie,zombie);
