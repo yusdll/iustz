@@ -24,7 +24,7 @@ protected:
     int level = 1; // Default level 1
     int warmWeaponSkill;
     int coldWeaponSkill;
-    int initialExperience = 15; // starting with experience set to 15
+    
 
 public:
     // Constructor
@@ -65,41 +65,13 @@ public:
     }
 
     // Function for leveling up character
-    void levelUp(int experience) {
-        const int experiencePerLevel = 10000;
-        int levelsToIncrease = experience / experiencePerLevel; // Calculate that how many levels we need to increase
-
-        float warmIncrease = 0.0, coldIncrease = 0.0; // Define warmIncrease and coldIncrease outside the loop
-
-        for (int i = 0; i < levelsToIncrease; ++i) {
-            if (level < 100) { // increase level only if it's less than 100
-                level += 1;
-
-                // Increase warm and cold weapon skills by 15% of their current values
-                warmWeaponSkill += warmWeaponSkill * 0.15;
-                coldWeaponSkill += coldWeaponSkill * 0.15;
-
-                // Make sure warmWeaponSkill and coldWeaponSkill don't exceed 100
-                warmWeaponSkill = (warmWeaponSkill > 100) ? 100 : warmWeaponSkill;
-                coldWeaponSkill = (coldWeaponSkill > 100) ? 100 : coldWeaponSkill;
-            }
-        }
-
-        // Ensuring that level doesn't exceed 100
-        if (level > 20) {
-            level = 20;
+    void increaseLevel() {
+        if (level < 20) {
+            level++;
         }
     }
 
-    // Function for increasing initial experience
-    void increaseInitialExperience(int amount) {
-        initialExperience += amount;
-    }
 
-    // Function for getting initial experience
-    int getInitialExperience() const {
-        return initialExperience;
-    }
 
     // Function to display character information
     void displayInfo() const {
@@ -130,8 +102,58 @@ public:
     int getPlayerattackPower() const {return PlayerattackPower;}
 
     // Function to switch the weapons during gameplay
-    void switchWeapon(std::string newWeapon) {
+    void PermanentItem(std::string newWeapon) {
         selectedWeapon = newWeapon;
+        if (newWeapon == "Shotgun") {
+            enemy.takeDamage(35);
+        } 
+        if (newWeapon == "Machine Gun") {
+            enemy.takeDamage(50);
+        } 
+        if (newWeapon == "Is50") {
+            enemy.takeDamage(30);
+        }
+        else if (newWeapon == "M16") {
+            enemy.takeDamage(30);
+        } 
+        
+    }
+
+    
+    void ConsumableItem(std::string foodName) {
+        if (foodName == "Cheeseburger") {
+            setHealth(getHealth() + 30);
+        }
+        if (foodName == "Dizi") {
+           setHealth(getHealth() + 35);
+        }
+        if (foodName == "Pasta") {
+            setHealth(getHealth() + 30);
+        }
+        if (foodName == "Redbull") {
+           setEnergy(getEnergy() + 30);
+        }
+        if (foodName == "Mangosmoothie") {
+            setEnergy(getEnergy() + 15);
+        }
+        else if (foodName == "Late") {
+           setEnergy(getEnergy() + 25);
+        }
+    }
+
+    void ThrowableItem(std::string itemName) {  
+        if (itemName == "Bomb") {
+            enemy.takeDamage(35);
+        }
+        if (itemName == "Grenade") {
+            enemy.takeDamage(20);
+        }
+        if (itemName == "Chemicalgas") {
+            enemy.takeDamage(40);
+        }
+        else if (itemName == "Fireball") {
+            enemy.takeDamage(25);
+        } 
     }
 
     // Including selected weapon
@@ -151,8 +173,11 @@ public:
         }
     }
 
-    // Function for leveling up character by experience
-    void levelUpByExperience(int experience) {
+    // Function for leveling up character
+    void increaseLevel() {
+        if (level < 20) {
+            level++;
+        }
     }
 };
 
@@ -188,6 +213,11 @@ public:
         player.takeDamage(attackPower);
         std::cout << "Zombie attacked Player for " << attackPower << " damage." << std::endl;
         takedamage(player);
+
+        if (health <= 0) {
+            std::cout << "you won! The zombie enemy character was killed." << std::endl;
+            player.increaseLevel(); // leveling up the character
+        }
     }
 };
 
@@ -217,6 +247,11 @@ public:
         player.takeDamage(attackPower);
         std::cout << "Stronger Zombie attacked Player for " << attackPower << " damage." << std::endl;
         takedamage(player);
+
+        if (health <= 0) {
+            std::cout << "you won! The stronger zombie enemy character was killed." << std::endl;
+            player.increaseLevel();
+        }
     }
 };
 
@@ -404,6 +439,11 @@ class HumanEnemy : public Character {
                 }     
             }
         }
+
+        if (health <= 0) {
+            std::cout << "you won! The human enemy character was killed." << std::endl;
+            player.increaseLevel();
+        }
 };
 
 class RandomAttack {
@@ -472,20 +512,20 @@ int main() {
     std::cout << "Gender: " << gender << std::endl;
     std::cout << "Selected Weapon: " << selectedWeapon << std::endl;
 
-    int experience;
-    std::cin >> experience;
 
     // Create a player character based on the entered information
     PlayerCharacter player(name, age, gender, selectedWeapon);
 
-    // Level up the player character based on experience
-    player.levelUp(experience);
-
+    
     std::cout << "\nPlayer Character Information After Leveling Up and Ability Upgrade: " << std::endl;
     player.displayInfo();
 
-    // Example of reducing the characters energy
-    player.decreaseEnergy(20); // Reduces energy by 20
+    std::chrono::minutes time_interval(1);
+    while (true) {
+        player.decreaseEnergy(15);
+        std::this_thread::sleep_for(time_interval);
+    }
+
     std::cout << "\nPlayer Character Information After Decreasing Energy: " << std::endl;
     player.displayInfo();
 
