@@ -285,11 +285,15 @@ class HumanEnemy : public Character {
         }
         void attackPlayerCharacter(PlayerCharacter& player , StrongerZombieCharacter& StrongerZombie, ZombieCharacter& zombie) {
             int determinative;
+
+            // Display information about the human enemy
             std::cout<<std::endl<<"Information about the human enemy : "<<std::endl;
             std::cout << "Name: " << name << std::endl;
             std::cout << "Age: " << age << std::endl;
             std::cout << "Gender: " << gender << std::endl;
             std::cout << "Health: " << health << std::endl;
+
+            // Wait for 1/6 minute before determining the attack technique
             auto startTime = std::chrono::high_resolution_clock::now();
             std::this_thread::sleep_for(std::chrono::minutes(1/6));
             auto endTime = std::chrono::high_resolution_clock::now();
@@ -297,18 +301,24 @@ class HumanEnemy : public Character {
             if (duration.count() >= 1/6) {
                 determinative = 1;
             }
+
+            // Determine the attack technique based on the player's level
             if (determinative == 1)
             {
                 if (player.getLevel()>=8 && player.getLevel()<=9) { 
+                    // Use the Attack technique
                     Techniques=Attack;  
                     player.takeDamage(attackPower);
                     std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
                     TakeDamage(player);
                 }else if (player.getLevel()>=10){
+                    // Use the Defense technique
                     Techniques=Defense;
                     player.takeDamage(attackPower);
                     std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
                     TakeDamage(player);
+                    
+                    // Use the Attack technique
                     Techniques=Attack;
                     player.takeDamage(attackPower);
                     std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
@@ -318,25 +328,36 @@ class HumanEnemy : public Character {
                     player.takeDamage(attackPower);
                     std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
                     TakeDamage(player);
+
+                    // Use the ReturnAttack technique
                     Techniques=ReturnAttack;
                     player.takeDamage(attackPower);
                     std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
                     TakeDamage(player);
+                    
+                    // Use the Attack technique
                     Techniques=Attack;
                     player.takeDamage(attackPower);
                     std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
                     TakeDamage(player);
                 }else if (player.getLevel()>=14) {
+                    // Use the Attack technique
                     Techniques=Attack;
                     TakeDamage(player);
                     player.takeDamage(attackPower);
                     std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
                     TakeDamage(player);
+
+                    // Use the Run technique
                     Techniques=Run;
                     std::cout<<"The human enemy fled to recuperate! But the zombies are coming. "<<std::endl;
+                    
+                    // Randomly select a zombie to attack the player
                     int RandomSelection= rand() % 2;
                     if ( RandomSelection == 0 ) { StrongerZombie.attackPlayer(player);  
                     }else if ( RandomSelection == 1 ) { zombie.attackPlayer(player); }
+                    
+                    // If the zombies are defeated, the human enemy returns with full health
                     if (StrongerZombie.getHealth() == 0 || zombie.getHealth() == 0)
                     {
                         Techniques=ComeBack;
@@ -350,9 +371,12 @@ class HumanEnemy : public Character {
                         TakeDamage(player);
                     }
                 }else if (player.getLevel()>=16) {
+                    // Randomly select the attack technique
                     int Randomselection= rand() % 2 + 1;
                     if ( Randomselection == 1 )
                     {
+                        // Use the Attack, Defense, ReturnAttack, and Attack techniques
+                        
                         Techniques=Attack;
                         TakeDamage(player);
                         Techniques=Defense;
@@ -373,6 +397,9 @@ class HumanEnemy : public Character {
                         Techniques=Attack;
                         TakeDamage(player);
                     }else if ( Randomselection == 2 ) {
+                        
+                        // Use the Attack, Defense, ReturnAttack, Attack, and Defense techniques
+                        
                         Techniques=Attack;
                         TakeDamage(player);
                         Techniques=Defense;
@@ -396,6 +423,9 @@ class HumanEnemy : public Character {
                         std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
                         TakeDamage(player);
                     }else if (player.getLevel()>=18) {
+
+                         // Use the Attack, ReturnAttack, Defense, ReturnAttack, and Attack techniques
+                        
                         Techniques=Attack;
                         TakeDamage(player);
                         Techniques=ReturnAttack;
