@@ -442,10 +442,14 @@ class HumanEnemy : public Character {
                         TakeDamage(player);
                         Techniques=Attack;
                         TakeDamage(player);
+
+                        // Use the Run technique
                         Techniques=Run;
                         std::cout<<"The human enemy fled to recuperate! But the zombies are coming. "<<std::endl;
                         StrongerZombie.attackPlayer(player); 
                         zombie.attackPlayer(player);
+
+                        // If the zombies are defeated, the human enemy returns with full health
                         if (StrongerZombie.getHealth() == 0 && zombie.getHealth() == 0){
                         Techniques=ComeBack;
                         health = 100 ;
