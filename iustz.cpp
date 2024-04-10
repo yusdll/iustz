@@ -357,7 +357,7 @@ public:
         std::cout << std::endl << "Information about the Zombie Enemy : " << std::endl;
         std::cout << "Name: Zombie Enemy" << std::endl;
         std::cout << "Health: " << health << std::endl;
-        while(health > 0 || player.getHealth()>0){
+        while(health > 0 && player.getHealth()>0){
         player.takeDamage(attackPower);
         std::cout << "Zombie attacked Player for " << attackPower << " damage." << std::endl;
         takedamage(player);}
@@ -461,7 +461,7 @@ public:
         std::cout << std::endl << "Information about the Stronger Zombie Enemy : " << std::endl;
         std::cout << "Name: Stronger Zombie Enemy" << std::endl;
         std::cout << "Health: " << health << std::endl;
-        for(int i=0;i<2;i++){
+        while(health > 0 && player.getHealth()>0){
         player.takeDamage(attackPower);
         std::cout << "Stronger Zombie attacked Player for " << attackPower << " damage." << std::endl;
         takedamage(player);}
@@ -601,7 +601,7 @@ public:
         {
             if (player.getLevel() >= 8 && player.getLevel() <= 9) {
                 // Use the Attack technique
-                while(health>0 || player.getHealth()>0){
+                while(health>0 && player.getHealth()>0){
                     Techniques = Attack;
                     player.takeDamage(attackPower);
                     std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
@@ -618,7 +618,7 @@ public:
                 TakeDamage(player);
 
                 // Use the Attack technique
-                while(health>0 || player.getHealth()>0){
+                while(health>0 && player.getHealth()>0){
                     Techniques = Attack;
                     player.takeDamage(attackPower);
                     std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
@@ -640,7 +640,7 @@ public:
                 TakeDamage(player);
 
                 // Use the Attack technique
-                while(health>0 || player.getHealth()>0){
+                while(health>0 && player.getHealth()>0){
                     Techniques = Attack;
                     player.takeDamage(attackPower);
                     std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
@@ -677,7 +677,7 @@ public:
                     std::cout << "Human enemy returned with 100 health. " << std::endl;
                     player.takeDamage(attackPower);
                     std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                    while(health>0 || player.getHealth()>0){
+                    while(health>0 && player.getHealth()>0){
                         Techniques = Attack;
                         player.takeDamage(attackPower);
                         std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
@@ -712,7 +712,7 @@ public:
                     player.takeDamage(attackPower);
                     std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
                     TakeDamage(player);
-                    while(health>0 || player.getHealth()>0){
+                    while(health>0 && player.getHealth()>0){
                         Techniques = Attack;
                         player.takeDamage(attackPower);
                         std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
@@ -743,7 +743,7 @@ public:
                     player.takeDamage(attackPower);
                     std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
                     TakeDamage(player);
-                    while(health>0 || player.getHealth()>0){
+                    while(health>0 && player.getHealth()>0){
                         Techniques = Attack;
                         player.takeDamage(attackPower);
                         std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
@@ -797,7 +797,7 @@ public:
                         player.takeDamage(attackPower);
                         std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
                         TakeDamage(player);
-                        while(health>0 || player.getHealth()>0){
+                        while(health>0 && player.getHealth()>0){
                             Techniques = Attack;
                             player.takeDamage(attackPower);
                             std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
