@@ -293,7 +293,6 @@ public:
                     std::cout<<"Increase player health by 30. "<<"Player Health: " << player.getHealth() << std::endl;
                     player.setcoin(player.getcoin()+30);
                     std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-                player.setTankEntered(false);
             }
             if(player.getsniperEntered()){
                 health -= 50;
@@ -311,7 +310,7 @@ public:
                     std::cout<<"Increase player health by 30. "<<"Player Health: " << player.getHealth() << std::endl;
                     player.setcoin(player.getcoin()+30);
                     std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-                player.setsniperEntered(false);}
+                }
             if(player.getIsPermanentItemRequested()){ 
                 health -= player.PermanentItem(player.getSelectedWeapon());
                 std::cout << "You attacked the zombie enemy for " << player.PermanentItem(player.getSelectedWeapon()) << " damage with SelectedWeapon !"<< std::endl;
@@ -328,7 +327,7 @@ public:
                     std::cout<<"Increase player health by 30. "<<"Player Health: " << player.getHealth() << std::endl;
                     player.setcoin(player.getcoin()+30);
                     std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-                player.setIsPermanentItemRequested(false);}
+                }
             if(player.getIsThrowableItemRequested()){ 
                 health -= player.ThrowableItem(player.getSelectedItem()); 
                 std::cout << "You attacked the zombie enemy for " << player.ThrowableItem(player.getSelectedItem()) << " damage with SelectedItem !"<< std::endl;
@@ -345,7 +344,7 @@ public:
                     std::cout<<"Increase player health by 30. "<<"Player Health: " << player.getHealth() << std::endl;
                     player.setcoin(player.getcoin()+30);
                     std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-                player.setIsThrowableItemRequested(false);}
+                }
             health -= player.getPlayerattackPower();
             std::cout << "You attacked the zombie enemy for " << player.getPlayerattackPower() << " damage !";
             if(health>0){
@@ -378,6 +377,10 @@ public:
             player.setHealth(100);
             player.setisPlayernotDead(false);}
         health=100;
+        player.setTankEntered(false);
+        player.setsniperEntered(false);
+        player.setIsPermanentItemRequested(false);
+        player.setIsThrowableItemRequested(false);
     }
 };
 
@@ -404,7 +407,6 @@ public:
                     std::cout<<"Increase player health by 40. "<<"Player Health: " << player.getHealth() << std::endl;
                     player.setcoin(player.getcoin()+50);
                     std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-                player.setTankEntered(false);
             }
             if(player.getsniperEntered()){
                 health -= 50;
@@ -422,7 +424,6 @@ public:
                     std::cout<<"Increase player health by 40. "<<"Player Health: " << player.getHealth() << std::endl;
                     player.setcoin(player.getcoin()+50);
                     std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-                player.setsniperEntered(false);
             }
             if(player.getIsPermanentItemRequested()){
                 health -= player.PermanentItem(player.getSelectedWeapon());
@@ -440,7 +441,7 @@ public:
                     std::cout<<"Increase player health by 40. "<<"Player Health: " << player.getHealth() << std::endl;
                     player.setcoin(player.getcoin()+50);
                     std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-                player.setIsPermanentItemRequested(false);} 
+                } 
             if(player.getIsThrowableItemRequested()){
                 health -= player.ThrowableItem(player.getSelectedItem()); 
                 std::cout << "You attacked the stronger zombie enemy for "<< player.ThrowableItem(player.getSelectedItem()) << " damage with SelectedItem !" << std::endl;
@@ -457,9 +458,8 @@ public:
                     std::cout<<"Increase player health by 40. "<<"Player Health: " << player.getHealth() << std::endl;
                     player.setcoin(player.getcoin()+50);
                     std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-                player.setIsThrowableItemRequested(false);}
-        }
-        if( player.getisPlayernotDead()){
+            }
+        
             health -= player.getPlayerattackPower();
             std::cout << "You attacked the stronger zombie enemy for " << player.getPlayerattackPower() << " damage !";
             if(health>0){
@@ -493,7 +493,10 @@ public:
             player.setHealth(100);
             player.setisPlayernotDead(false);}
         health=100;
-        
+        player.setTankEntered(false);
+        player.setsniperEntered(false);
+        player.setIsPermanentItemRequested(false);
+        player.setIsThrowableItemRequested(false);
     }
 };
 
@@ -524,7 +527,6 @@ public:
                     player.setcoin(player.getcoin()+70);
                     std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;
                 }
-                player.setTankEntered(false);
             }
             if(player.getsniperEntered()){
                 health -= 50;
@@ -541,9 +543,7 @@ public:
                     player.setHealth(player.getHealth()+50);
                     std::cout<<"Increase player health by 50. "<<"Player Health: " << player.getHealth() << std::endl;
                     player.setcoin(player.getcoin()+70);
-                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;
-                }
-                player.setsniperEntered(false);
+                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
             }
             if(player.getIsPermanentItemRequested()){
                 health -= player.PermanentItem(player.getSelectedWeapon());
@@ -560,9 +560,8 @@ public:
                     player.setHealth(player.getHealth()+50);
                     std::cout<<"Increase player health by 50. "<<"Player Health: " << player.getHealth() << std::endl;
                     player.setcoin(player.getcoin()+70);
-                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;
-                }
-                player.setIsPermanentItemRequested(false);} 
+                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
+                } 
             if(player.getIsThrowableItemRequested()){
                 health -= player.ThrowableItem(player.getSelectedItem()); 
                 std::cout << "You attacked the Human Enemy for "<< player.ThrowableItem(player.getSelectedItem()) << " damage with SelectedItem ! "<< " " << std::endl;
@@ -578,9 +577,8 @@ public:
                     player.setHealth(player.getHealth()+50);
                     std::cout<<"Increase player health by 50. "<<"Player Health: " << player.getHealth() << std::endl;
                     player.setcoin(player.getcoin()+70);
-                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;
+                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
                 }
-                player.setIsThrowableItemRequested(false);}
         }
         if (Techniques == Attack || Techniques == ComeBack)
         {
@@ -645,6 +643,10 @@ public:
                     player.setHealth(100);
                     player.setisPlayernotDead(false);}
                 health=100;
+                player.setTankEntered(false);
+                player.setsniperEntered(false);
+                player.setIsPermanentItemRequested(false);
+                player.setIsThrowableItemRequested(false);
             }
             else if (player.getLevel() >= 10) {
                 // Use the Defense technique
@@ -663,6 +665,10 @@ public:
                     player.setHealth(100);
                     player.setisPlayernotDead(false);}
                 health=100;
+                player.setTankEntered(false);
+                player.setsniperEntered(false);
+                player.setIsPermanentItemRequested(false);
+                player.setIsThrowableItemRequested(false);
             }
             else if (player.getLevel() >= 12) {
                 Techniques = Defense;
@@ -686,6 +692,10 @@ public:
                     player.setHealth(100);
                     player.setisPlayernotDead(false);}
                 health=100;
+                player.setTankEntered(false);
+                player.setsniperEntered(false);
+                player.setIsPermanentItemRequested(false);
+                player.setIsThrowableItemRequested(false);
             }
             else if (player.getLevel() >= 14) {
                 // Use the Attack technique
@@ -724,6 +734,10 @@ public:
                         player.setHealth(100);
                         player.setisPlayernotDead(false);}
                     health=100;
+                    player.setTankEntered(false);
+                    player.setsniperEntered(false);
+                    player.setIsPermanentItemRequested(false);
+                    player.setIsThrowableItemRequested(false);
                 }
             }
             else if (player.getLevel() >= 16) {
@@ -760,6 +774,10 @@ public:
                         player.setHealth(100);
                         player.setisPlayernotDead(false);}
                     health=100;
+                    player.setTankEntered(false);
+                    player.setsniperEntered(false);
+                    player.setIsPermanentItemRequested(false);
+                    player.setIsThrowableItemRequested(false);
                 }
                 else if (Randomselection == 2) {
 
@@ -792,6 +810,10 @@ public:
                         player.setHealth(100);
                         player.setisPlayernotDead(false);}
                     health=100;
+                    player.setTankEntered(false);
+                    player.setsniperEntered(false);
+                    player.setIsPermanentItemRequested(false);
+                    player.setIsThrowableItemRequested(false);
                 }
                 else if (player.getLevel() >= 18) {
 
@@ -847,6 +869,10 @@ public:
                             player.setHealth(100);
                             player.setisPlayernotDead(false);}
                         health=100; 
+                        player.setTankEntered(false);
+                        player.setsniperEntered(false);
+                        player.setIsPermanentItemRequested(false);
+                        player.setIsThrowableItemRequested(false);
                     }
                 }
             }
