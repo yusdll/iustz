@@ -1151,7 +1151,7 @@ public:
                     }
                     health=100;
                 }
-                else if (player.getLevel() >= 18) {
+                else if (player.getLevel() >= 18 && player.getLevel() <= 20) {
 
                     // Use the Attack, ReturnAttack, Defense, ReturnAttack, and Attack techniques
 
@@ -1191,11 +1191,16 @@ public:
                         if(player.getHealth() == 0){
                             player.setHealth(100);
                         }
-                        health=100; 
+                        health=100;
                     }
                 }
             }
         }
+        if(player.getLevel() == 20){
+            std::cout<<"Losing a stage doesn't mean we've lost the entire game."<<std::endl;
+            std::cout<<"We know how to start things in the most perfect way And the proof of our brave spirit was this victory despite all of the injuries we witnessed, standing face to face with people for whom we were willing to offer our lives one day, and stifling the flames of despair within us throughout this entire journey."<<std::endl;
+            exit(0);
+        } 
     }
 };
 
@@ -1339,6 +1344,11 @@ int main() {
     StrongerZombieCharacter strongerZombie;
     HumanEnemy enemy;
     Shop shop;
+    std::cout<<"What does it feel like to lose your entire life in one freaking day?"<<std::endl;
+    std::cout<<"You sleep with the expectation that tomorrow will be just like any other day in your life.But...when you wake up, all you see is dead people with blood on them. "<<std::endl;
+    std::cout<<"Right now, you realise there is no beginning left for you. The only thing you have to do is try to survive and escape from the end."<<std::endl;
+    std::cout<<"As long as we're on the same page and our glasses are not empty from the taste of life, we'll be running away from the arms of death. You and I are “partner in crime”."<<std::endl;
+
     displayMainMenu();
     handleChoice(player, zombie, strongerZombie, enemy, shop);
     while (true) {
