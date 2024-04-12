@@ -1241,10 +1241,16 @@ void displayMainMenu() {
     std::cout << "3. Exit" << std::endl;
 }
 
-void displayMainMenu2() {
+void displayMainMenu2(PlayerCharacter& player) {
+    if(player.getLevel()>1){
     std::cout<<"1. next level"<<std::endl;
     std::cout << "2. Change player information" << std::endl;
+    std::cout << "3. Exit" << std::endl;}
+    else if(player.getLevel() == 1){
+    std::cout<<"1. Start Game"<<std::endl;
+    std::cout << "2. Change player information" << std::endl;
     std::cout << "3. Exit" << std::endl;
+    }
 }
 
 // Function to handle player's choice
@@ -1352,7 +1358,7 @@ int main() {
     displayMainMenu();
     handleChoice(player, zombie, strongerZombie, enemy, shop);
     while (true) {
-        displayMainMenu2();
+        displayMainMenu2(player);
         handleChoice2(player, zombie, strongerZombie, enemy, shop);
         handleChoice(player, zombie, strongerZombie, enemy, shop);
     }
