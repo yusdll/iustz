@@ -76,12 +76,12 @@ protected:
     std::string selectedWeapon; // the weapon that character selected for the player character
     int PlayerattackPower,coin=0;
     std::string SelectedItem;
-    bool isPlayernotDead = true,IsConsumableItemRequested = false, IsThrowableItemRequested = false, IsPermanentItemRequested = false;
+    bool IsConsumableItemRequested = false, IsThrowableItemRequested = false, IsPermanentItemRequested = false, ISAttackPowerRequested = false;
     bool sniperEntered = false, TankEntered = false, DefenceIsAactive = false;
 public:
     // Constructor
-    PlayerCharacter(std::string _name, int _age, std::string _gender, std::string _selectedWeapon)
-        : Character(_name, _age, _gender), selectedWeapon(_selectedWeapon) {
+    PlayerCharacter(std::string _name, int _age, std::string _gender)
+        : Character(_name, _age, _gender) {
         PlayerattackPower = rand() % 11 + 55;
     }
 
@@ -96,11 +96,10 @@ public:
     void setsniperEntered(bool _sniperEntered){ sniperEntered = _sniperEntered; }
     void setTankEntered(bool _TankEntered){ TankEntered = _TankEntered; }
     void setDefenceIsAactive(bool _DefenceIsAactive){ DefenceIsAactive = _DefenceIsAactive; }
-    void setisPlayernotDead(bool _isPlayernotDead){ isPlayernotDead = _isPlayernotDead; }
+    void setISAttackPowerRequested(bool _ISAttackPowerRequested){ ISAttackPowerRequested = _ISAttackPowerRequested; }
     std::string getSelectedWeapon() const { return selectedWeapon; }
     int getPlayerattackPower() const { return PlayerattackPower; }
     std::string getSelectedItem() { return SelectedItem; }
-    bool getisPlayernotDead(){return isPlayernotDead;}
     int getcoin(){return coin; }
     bool getIsConsumableItemRequested(){return IsConsumableItemRequested;}
     bool getIsThrowableItemRequested(){return IsThrowableItemRequested;}
@@ -108,45 +107,36 @@ public:
     bool getsniperEntered(){return sniperEntered;}
     bool getTankEntered(){return TankEntered;}
     bool getDefenceIsAactive(){return DefenceIsAactive;}
+    bool getISAttackPowerRequested(){return ISAttackPowerRequested;}
 
     // Function to switch the weapons during gameplay
     int PermanentItem(std::string newWeapon) {
         int Damage;
         if (newWeapon == "Shotgun") {
-             std::cout << "        _________________" << std::endl;
-            std::cout << "_____ /   Shotgun_____ /" << std::endl;
-            std::cout << "\\______/ \\/" << std::endl;
             return Damage = 35;
         }
         else if (newWeapon == "Machine Gun") {
-            std::cout << "        _________________" << std::endl;
-            std::cout << "_____ /   MachinGun_____ /" << std::endl;
-            std::cout << "\\______/ \\/" << std::endl;
-            std::cout<<"           |\\"<<std::endl;
             return Damage = 50;
         }
         else if (newWeapon == "Is50") {
-            std::cout << "        _________________" << std::endl;
-            std::cout << "_____ /   IS50_________ /" << std::endl;
-            std::cout << "\\______/ \\/" << std::endl;
             return Damage = 30;
         }
         else if (newWeapon == "M16") {
-            std::cout << "        _________________" << std::endl;
-            std::cout << "_____ /   M16 _________ /" << std::endl;
-            std::cout << "\\______/ \\/" << std::endl;
             return Damage = 30;
         }
     }
 
     void ConsumableItem(std::string foodName) {
-        if (foodName == "Pizzaa") {
+        if (foodName == "Pizza") {
             std::cout <<"     /\\     "<<std::endl;
             std::cout <<"    /00\\     "<<std::endl;
             std::cout <<"   /0000\\     "<<std::endl;
-            std::cout <<"  /pizzaa\\     "<<std::endl;
+            std::cout <<"  /pizza \\     "<<std::endl;
             std::cout <<" /________\\     "<<std::endl;
             setHealth(getHealth() + 30);
+            if(getHealth()>100){
+                setHealth(100);
+            }
         }
         else if (foodName == "Dizi") {
             std::cout <<"      /\\     "<<std::endl;
@@ -155,6 +145,9 @@ public:
             std::cout <<"   / Dizzi\\     "<<std::endl;
             std::cout <<"   \\______/     "<<std::endl;
             setHealth(getHealth() + 35);
+            if(getHealth()>100){
+                setHealth(100);
+            }
         }
         else if (foodName == "Sambouse") {
             std::cout <<"     /\\    "<<std::endl;
@@ -164,6 +157,9 @@ public:
             std::cout <<" /sambouse\\    "<<std::endl;
             std::cout <<"/__________\\    "<<std::endl;
             setHealth(getHealth() + 30);
+            if(getHealth()>100){
+                setHealth(100);
+            }
         }
         else if (foodName == "Redbull") {
             std::cout<<"    _________"<<std::endl;
@@ -174,6 +170,9 @@ public:
             std::cout <<" ||________|" << std::endl;
             std::cout <<" ||________|" << std::endl;
             setEnergy(getEnergy() + 30);
+            if(getEnergy()>100){
+                setEnergy(100);
+            }
         }
         else if (foodName == "Mangosmoothie") {
             std::cout <<"      |       " << std::endl;
@@ -183,6 +182,9 @@ public:
             std::cout <<"   \\     /   " << std::endl;
             std::cout <<"    \\___/   " << std::endl;
             setEnergy(getEnergy() + 15);
+            if(getEnergy()>100){
+                setEnergy(100);
+            }
         }
         else if (foodName == "Late") {
             std::cout <<"  ________ " << std::endl;
@@ -190,41 +192,25 @@ public:
             std::cout <<"  |_Late_| " << std::endl;
             std::cout <<"  |______| " << std::endl;
             setEnergy(getEnergy() + 25);
+            if(getEnergy()>100){
+                setEnergy(100);
+            }
         }
     }
+
 
     int ThrowableItem(std::string itemName) {
         int Damage;
         if (itemName == "Bomb") {
-            std::cout << "_____" << std::endl;
-            std::cout << "\\    \\____________" << std::endl;
-            std::cout << " \\     MK81        \\" << std::endl;
-            std::cout << " /    ____________ /" << std::endl;
-            std::cout << "/____/" << std::endl;
             return Damage = 35;
         }
         else if (itemName == "Grenade") {
-            std::cout << "_____" << std::endl;
-            std::cout << "\\    \\____________" << std::endl;
-            std::cout << " \\     Grenade     \\" << std::endl;
-            std::cout << " /    ____________ /" << std::endl;
-            std::cout << "/____/" << std::endl;
             return Damage = 20;
         }
         else if (itemName == "Chemicalgas") {
-            std::cout << "_____" << std::endl;
-            std::cout << "\\    \\_____________" << std::endl;
-            std::cout << " \\    ChemicalGas  \\" << std::endl;
-            std::cout << " /    ____________ /" << std::endl;
-            std::cout << "/____/" << std::endl;
             return Damage = 40;
         }
         else if (itemName == "Fireball") {
-            std::cout << "_____" << std::endl;
-            std::cout << "\\    \\_____________" << std::endl;
-            std::cout << " \\    Fireball      \\" << std::endl;
-            std::cout << " /    ____________ /" << std::endl;
-            std::cout << "/____/" << std::endl;
             return Damage = 25;
         }
     }
@@ -238,14 +224,14 @@ public:
     void takeDamage(int damage){
         if(!getDefenceIsAactive()){
             health -= damage;
-            if (health > 0 && health < 100){
+            if (getHealth() > 0 && getHealth() < 100){
                 std::cout << "Player Health: " << getHealth() << std::endl;
             }
-            else if (health >= 100){
-                health = 100;
+            else if (getHealth() >= 100){
+                setHealth(100);
                 std::cout << "Player Health: " << getHealth() << std::endl;
             }
-            else if (health <= 0) {
+            else if (getHealth() <= 0) {
                 health = 0;
                 std::cout << "You lose! You should play this level again." << std::endl;
                 std::cout << "Player Health: " << getHealth() << std::endl;
@@ -264,655 +250,9 @@ public:
 
 };
 
-class ZombieCharacter {
-protected:
-    int health = 100;
-    int attackPower;
-
-public:
-    // Constructor
-    ZombieCharacter() {
-        // Setting the attack power to a random number between 10 and 20
-        attackPower = rand() % 11 + 10;
-    }
-
-    int getHealth() const { return health; }
-
-    void takedamage(PlayerCharacter& player) {
-        if(player.getisPlayernotDead()){
-            if(player.getTankEntered()){
-                health -= 100;
-                std::cout << "Tank entered the game and reduced Enemy Health by 100!"<< std::endl;
-                if (health <= 0) {
-                    health = 0;
-                    std::cout<< "The health of the zombie enemy is : " << health << " "<< std::endl;
-                    std::cout << "you won! The zombie enemy character was killed. " << std::endl;
-                    player.setLevel(player.getLevel()+1);
-                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
-                    player.setHealth(player.getHealth()+30);
-                    std::cout<<"Increase player health by 30. "<<"Player Health: " << player.getHealth() << std::endl;
-                    player.setcoin(player.getcoin()+30);
-                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-            }
-            if(player.getsniperEntered()){
-                health -= 50;
-                std::cout << "Sniper entered the game and reduced Enemy Health by 50!"<< std::endl;
-                if(health>0){
-                    std::cout<< "The health of the zombie enemy is : " << health << " "<< std::endl; 
-                }
-                else if (health <= 0 ) {
-                    health = 0;
-                    std::cout<< "The health of the zombie enemy is : " << health << " "<< std::endl;
-                    std::cout << "you won! The zombie enemy character was killed. " << std::endl;
-                    player.setLevel(player.getLevel()+1);
-                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
-                    player.setHealth(player.getHealth()+30);
-                    std::cout<<"Increase player health by 30. "<<"Player Health: " << player.getHealth() << std::endl;
-                    player.setcoin(player.getcoin()+30);
-                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-                }
-            if(player.getIsPermanentItemRequested()){ 
-                health -= player.PermanentItem(player.getSelectedWeapon());
-                std::cout << "You attacked the zombie enemy for " << player.PermanentItem(player.getSelectedWeapon()) << " damage with SelectedWeapon !"<< std::endl;
-                if(health>0){
-                    std::cout<< "The health of the zombie enemy is : " << health << " "<< std::endl; 
-                }
-                else if (health <= 0 ) {
-                    health = 0;
-                    std::cout<< "The health of the zombie enemy is : " << health << " "<< std::endl;
-                    std::cout << "you won! The zombie enemy character was killed. " << std::endl;
-                    player.setLevel(player.getLevel()+1);
-                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
-                    player.setHealth(player.getHealth()+30);
-                    std::cout<<"Increase player health by 30. "<<"Player Health: " << player.getHealth() << std::endl;
-                    player.setcoin(player.getcoin()+30);
-                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-                }
-            if(player.getIsThrowableItemRequested()){ 
-                health -= player.ThrowableItem(player.getSelectedItem()); 
-                std::cout << "You attacked the zombie enemy for " << player.ThrowableItem(player.getSelectedItem()) << " damage with SelectedItem !"<< std::endl;
-                if(health>0){
-                    std::cout<< "The health of the zombie enemy is : " << health << " "<< std::endl; 
-                }
-                else if (health <= 0 ) {
-                    health = 0;
-                    std::cout<< "The health of the zombie enemy is : " << health << " "<< std::endl;
-                    std::cout << "you won! The zombie enemy character was killed. " << std::endl;
-                    player.setLevel(player.getLevel()+1);
-                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
-                    player.setHealth(player.getHealth()+30);
-                    std::cout<<"Increase player health by 30. "<<"Player Health: " << player.getHealth() << std::endl;
-                    player.setcoin(player.getcoin()+30);
-                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-                }
-            health -= player.getPlayerattackPower();
-            std::cout << "You attacked the zombie enemy for " << player.getPlayerattackPower() << " damage !";
-            if(health>0){
-                std::cout<< "The health of the zombie enemy is : " << health << " "<< std::endl; 
-            }
-            else if (health <= 0 ) {
-                health = 0;
-                std::cout<< "The health of the zombie enemy is : " << health << " "<< std::endl;
-                std::cout << "you won! The zombie enemy character was killed. " << std::endl;
-                player.setLevel(player.getLevel()+1);
-                std::cout<<"player level : "<<player.getLevel()<<std::endl;
-                player.setHealth(player.getHealth()+30);
-                std::cout<<"Increase player health by 30. "<<"Player Health: " << player.getHealth() << std::endl;
-                player.setcoin(player.getcoin()+30);
-                std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-        }
-    }
-
-    // Function for attack a player
-    void attackPlayer(PlayerCharacter& player) {
-        // Reduce player's health by the attack power of the zombie
-        std::cout << std::endl << "Information about the Zombie Enemy : " << std::endl;
-        std::cout << "Name: Zombie Enemy" << std::endl;
-        std::cout << "Health: " << health << std::endl;
-        while(health > 0 && player.getHealth()>0){
-        player.takeDamage(attackPower);
-        std::cout << "Zombie attacked Player for " << attackPower << " damage." << std::endl;
-        takedamage(player);}
-        if(player.getHealth() == 0){
-            player.setHealth(100);
-            player.setisPlayernotDead(false);}
-        health=100;
-        player.setTankEntered(false);
-        player.setsniperEntered(false);
-        player.setIsPermanentItemRequested(false);
-        player.setIsThrowableItemRequested(false);
-    }
-};
-
-class StrongerZombieCharacter : public ZombieCharacter {
-public:
-    // Constructor
-    StrongerZombieCharacter() {
-        // setting attack power to a random number between 35 and 45
-        attackPower = rand() % 11 + 35;
-    }
-
-    void takedamage(PlayerCharacter& player) {
-        if(player.getisPlayernotDead()){
-            if(player.getTankEntered()){
-                health -= 100;
-                std::cout << "Tank entered the game and reduced Enemy Health by 100!"<< std::endl;
-                if (health <= 0) {
-                    health = 0;
-                    std::cout<<" The health of the stronger zombie enemy is : " << health << " " << std::endl;
-                    std::cout << "you won! The stronger zombie enemy character was killed. " << std::endl;
-                    player.setLevel(player.getLevel()+1);
-                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
-                    player.setHealth(player.getHealth()+40);
-                    std::cout<<"Increase player health by 40. "<<"Player Health: " << player.getHealth() << std::endl;
-                    player.setcoin(player.getcoin()+50);
-                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-            }
-            if(player.getsniperEntered()){
-                health -= 50;
-                std::cout << "Sniper entered the game and reduced Enemy Health by 50!"<< std::endl;
-                if(health>0){
-                    std::cout<<" The health of the stronger zombie enemy is : " << health << " " << std::endl;
-                }
-                else if (health <= 0) {
-                    health = 0;
-                    std::cout<<" The health of the stronger zombie enemy is : " << health << " " << std::endl;
-                    std::cout << "you won! The stronger zombie enemy character was killed. " << std::endl;
-                    player.setLevel(player.getLevel()+1);
-                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
-                    player.setHealth(player.getHealth()+40);
-                    std::cout<<"Increase player health by 40. "<<"Player Health: " << player.getHealth() << std::endl;
-                    player.setcoin(player.getcoin()+50);
-                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-            }
-            if(player.getIsPermanentItemRequested()){
-                health -= player.PermanentItem(player.getSelectedWeapon());
-                std::cout << "You attacked the stronger zombie enemy for " << player.PermanentItem(player.getSelectedWeapon())<< " damage with SelectedWeapon !" << std::endl;
-                if(health>0){
-                    std::cout<<" The health of the stronger zombie enemy is : " << health << " " << std::endl;
-                }
-                else if (health <= 0) {
-                    health = 0;
-                    std::cout<<" The health of the stronger zombie enemy is : " << health << " " << std::endl;
-                    std::cout << "you won! The stronger zombie enemy character was killed. " << std::endl;
-                    player.setLevel(player.getLevel()+1);
-                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
-                    player.setHealth(player.getHealth()+40);
-                    std::cout<<"Increase player health by 40. "<<"Player Health: " << player.getHealth() << std::endl;
-                    player.setcoin(player.getcoin()+50);
-                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-                } 
-            if(player.getIsThrowableItemRequested()){
-                health -= player.ThrowableItem(player.getSelectedItem()); 
-                std::cout << "You attacked the stronger zombie enemy for "<< player.ThrowableItem(player.getSelectedItem()) << " damage with SelectedItem !" << std::endl;
-                if(health>0){
-                    std::cout<<" The health of the stronger zombie enemy is : " << health << " " << std::endl;
-                }
-                else if (health <= 0) {
-                    health = 0;
-                    std::cout<<" The health of the stronger zombie enemy is : " << health << " " << std::endl;
-                    std::cout << "you won! The stronger zombie enemy character was killed. " << std::endl;
-                    player.setLevel(player.getLevel()+1);
-                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
-                    player.setHealth(player.getHealth()+40);
-                    std::cout<<"Increase player health by 40. "<<"Player Health: " << player.getHealth() << std::endl;
-                    player.setcoin(player.getcoin()+50);
-                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-            }
-        
-            health -= player.getPlayerattackPower();
-            std::cout << "You attacked the stronger zombie enemy for " << player.getPlayerattackPower() << " damage !";
-            if(health>0){
-                std::cout<<" The health of the stronger zombie enemy is : " << health << " " << std::endl;
-            }
-            else if (health <= 0) {
-                health = 0;
-                std::cout<<" The health of the stronger zombie enemy is : " << health << " " << std::endl;
-                std::cout << "you won! The stronger zombie enemy character was killed. " << std::endl;
-                player.setLevel(player.getLevel()+1);
-                std::cout<<"player level : "<<player.getLevel()<<std::endl;
-                player.setHealth(player.getHealth()+40);
-                    std::cout<<"Increase player health by 40. "<<"Player Health: " << player.getHealth() << std::endl;
-                player.setcoin(player.getcoin()+50);
-                std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-        }
-    }
-
-
-    // Function for attack a player
-    void attackPlayer(PlayerCharacter& player) {
-        // Reduce player's health by the attack power of the stronger zombie 
-        std::cout << std::endl << "Information about the Stronger Zombie Enemy : " << std::endl;
-        std::cout << "Name: Stronger Zombie Enemy" << std::endl;
-        std::cout << "Health: " << health << std::endl;
-        while(health > 0 && player.getHealth()>0){
-        player.takeDamage(attackPower);
-        std::cout << "Stronger Zombie attacked Player for " << attackPower << " damage." << std::endl;
-        takedamage(player);}
-        if(player.getHealth() == 0){
-            player.setHealth(100);
-            player.setisPlayernotDead(false);}
-        health=100;
-        player.setTankEntered(false);
-        player.setsniperEntered(false);
-        player.setIsPermanentItemRequested(false);
-        player.setIsThrowableItemRequested(false);
-    }
-};
-
-
-class HumanEnemy : public Character {
-protected:
-    int attackPower;
-public:
-    HumanEnemy() : Character("HumanEnemy", rand() % 10 + 20, rand() % 2 == 0 ? "Male" : "Female") {
-        warmWeaponSkill = rand() % 41 + 30;
-        coldWeaponSkill = rand() % 41 + 30;
-        attackPower = rand() % 11 + 45;
-    }
-
-    void TakeDamage(PlayerCharacter& player) {
-        if(player.getisPlayernotDead()){
-            if(player.getTankEntered()){
-                health -= 100;
-                std::cout << "Tank entered the game and reduced Enemy Health by 100!"<< std::endl;
-                if (health <= 0) {
-                    health = 0;
-                    std::cout<<" The health of the human enemy is : " << health << " " << std::endl;
-                    std::cout << "you won! The human enemy character was killed. " << std::endl;
-                    player.setLevel(player.getLevel()+1);
-                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
-                    player.setHealth(player.getHealth()+50);
-                    std::cout<<"Increase player health by 50. "<<"Player Health: " << player.getHealth() << std::endl;
-                    player.setcoin(player.getcoin()+70);
-                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;
-                }
-            }
-            if(player.getsniperEntered()){
-                health -= 50;
-                std::cout << "Sniper entered the game and reduced Enemy Health by 50!"<< std::endl;
-                if(health>0){
-                    std::cout<<" The health of the human enemy is : " << health << " " << std::endl;
-                }
-                else if (health <= 0 && player.getisPlayernotDead()) {
-                    health = 0;
-                    std::cout<<" The health of the human enemy is : " << health << " " << std::endl;
-                    std::cout << "you won! The human enemy character was killed. " << std::endl;
-                    player.setLevel(player.getLevel()+1);
-                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
-                    player.setHealth(player.getHealth()+50);
-                    std::cout<<"Increase player health by 50. "<<"Player Health: " << player.getHealth() << std::endl;
-                    player.setcoin(player.getcoin()+70);
-                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-            }
-            if(player.getIsPermanentItemRequested()){
-                health -= player.PermanentItem(player.getSelectedWeapon());
-                std::cout << "You attacked the Human Enemy for " << player.PermanentItem(player.getSelectedWeapon())<< " damage with SelectedWeapon ! "<< std::endl;
-                if(health>0){
-                    std::cout<<" The health of the human enemy is : " << health << " " << std::endl;
-                }
-                else if (health <= 0 && player.getisPlayernotDead()) {
-                    health = 0;
-                    std::cout<<" The health of the human enemy is : " << health << " " << std::endl;
-                    std::cout << "you won! The human enemy character was killed. " << std::endl;
-                    player.setLevel(player.getLevel()+1);
-                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
-                    player.setHealth(player.getHealth()+50);
-                    std::cout<<"Increase player health by 50. "<<"Player Health: " << player.getHealth() << std::endl;
-                    player.setcoin(player.getcoin()+70);
-                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-                } 
-            if(player.getIsThrowableItemRequested()){
-                health -= player.ThrowableItem(player.getSelectedItem()); 
-                std::cout << "You attacked the Human Enemy for "<< player.ThrowableItem(player.getSelectedItem()) << " damage with SelectedItem ! "<< " " << std::endl;
-                if(health>0){
-                    std::cout<<" The health of the human enemy is : " << health << " " << std::endl;
-                }
-                else if (health <= 0 && player.getisPlayernotDead()) {
-                    health = 0;
-                    std::cout<<" The health of the human enemy is : " << health << " " << std::endl;
-                    std::cout << "you won! The human enemy character was killed. " << std::endl;
-                    player.setLevel(player.getLevel()+1);
-                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
-                    player.setHealth(player.getHealth()+50);
-                    std::cout<<"Increase player health by 50. "<<"Player Health: " << player.getHealth() << std::endl;
-                    player.setcoin(player.getcoin()+70);
-                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
-                }
-        }
-        if (Techniques == Attack || Techniques == ComeBack)
-        {
-            health -= player.getPlayerattackPower();
-            if (health < 100 && player.getisPlayernotDead()) {
-                std::cout << "You attacked the human enemy for " << player.getPlayerattackPower() << " damage !";
-                if(health>0){
-                    std::cout<<" The health of the human enemy is : " << health << " " << std::endl;
-                }
-                else if (health <= 0 && player.getisPlayernotDead()) {
-                    health = 0;
-                    std::cout<<" The health of the human enemy is : " << health << " " << std::endl;
-                    std::cout << "you won! The human enemy character was killed. " << std::endl;
-                    player.setLevel(player.getLevel()+1);
-                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
-                    player.setHealth(player.getHealth()+50);
-                    std::cout<<"Increase player health by 50. "<<"Player Health: " << player.getHealth() << std::endl;
-                    player.setcoin(player.getcoin()+70);
-                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;
-                }
-            }
-        }
-        else if (Techniques == ReturnAttack) {
-            player.setHealth(player.getHealth() - player.getPlayerattackPower());
-            std::cout << "oops! Human Enemy return the attack to the player with a strength of " << player.getPlayerattackPower() << ". " << std::endl;
-        }
-        else if (Techniques == Defense) {
-            health = health;
-            std::cout << "oops! The human enemy defended the player's attack. " << std::endl;
-        }
-    }
-    void attackPlayerCharacter(PlayerCharacter& player, StrongerZombieCharacter& StrongerZombie, ZombieCharacter& zombie) {
-        int determinative;
-
-        // Display information about the human enemy
-        std::cout << std::endl << "Information about the human enemy : " << std::endl;
-        std::cout << "Name: " << name << std::endl;
-        std::cout << "Age: " << age << std::endl;
-        std::cout << "Gender: " << gender << std::endl;
-        std::cout << "Health: " << health << std::endl;
-
-        // Wait for 1/6 minute before determining the attack technique
-        auto startTime = std::chrono::high_resolution_clock::now();
-        std::this_thread::sleep_for(std::chrono::minutes(1 / 6));
-        auto endTime = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::minutes>(endTime - startTime);
-        if (duration.count() >= 1 / 6) {
-            determinative = 1;
-        }
-
-        // Determine the attack technique based on the player's level
-        if (determinative == 1)
-        {
-            if (player.getLevel() >= 8 && player.getLevel() <= 9) {
-                // Use the Attack technique
-                while(health>0 && player.getHealth()>0){
-                    Techniques = Attack;
-                    player.takeDamage(attackPower);
-                    std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                    TakeDamage(player);}
-                if(player.getHealth() == 0){
-                    player.setHealth(100);
-                    player.setisPlayernotDead(false);}
-                health=100;
-                player.setTankEntered(false);
-                player.setsniperEntered(false);
-                player.setIsPermanentItemRequested(false);
-                player.setIsThrowableItemRequested(false);
-            }
-            else if (player.getLevel() >= 10) {
-                // Use the Defense technique
-                Techniques = Defense;
-                player.takeDamage(attackPower);
-                std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                TakeDamage(player);
-
-                // Use the Attack technique
-                while(health>0 && player.getHealth()>0){
-                    Techniques = Attack;
-                    player.takeDamage(attackPower);
-                    std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                    TakeDamage(player);}
-                if(player.getHealth() == 0){
-                    player.setHealth(100);
-                    player.setisPlayernotDead(false);}
-                health=100;
-                player.setTankEntered(false);
-                player.setsniperEntered(false);
-                player.setIsPermanentItemRequested(false);
-                player.setIsThrowableItemRequested(false);
-            }
-            else if (player.getLevel() >= 12) {
-                Techniques = Defense;
-                player.takeDamage(attackPower);
-                std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                TakeDamage(player);
-
-                // Use the ReturnAttack technique
-                Techniques = ReturnAttack;
-                player.takeDamage(attackPower);
-                std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                TakeDamage(player);
-
-                // Use the Attack technique
-                while(health>0 && player.getHealth()>0){
-                    Techniques = Attack;
-                    player.takeDamage(attackPower);
-                    std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                    TakeDamage(player);}
-                if(player.getHealth() == 0){
-                    player.setHealth(100);
-                    player.setisPlayernotDead(false);}
-                health=100;
-                player.setTankEntered(false);
-                player.setsniperEntered(false);
-                player.setIsPermanentItemRequested(false);
-                player.setIsThrowableItemRequested(false);
-            }
-            else if (player.getLevel() >= 14) {
-                // Use the Attack technique
-                Techniques = Attack;
-                TakeDamage(player);
-                player.takeDamage(attackPower);
-                std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                TakeDamage(player);
-
-                // Use the Run technique
-                Techniques = Run;
-                std::cout << "The human enemy fled to recuperate! But the zombies are coming. " << std::endl;
-
-                // Randomly select a zombie to attack the player
-                int RandomSelection = rand() % 2;
-                if (RandomSelection == 0) {
-                    StrongerZombie.attackPlayer(player);
-                }
-                else if (RandomSelection == 1) { zombie.attackPlayer(player); }
-
-                // If the zombies are defeated, the human enemy returns with full health
-                if (StrongerZombie.getHealth() == 0 || zombie.getHealth() == 0)
-                {
-                    player.setLevel(player.getLevel()-1);
-                    Techniques = ComeBack;
-                    health = 100;
-                    std::cout << "Human enemy returned with 100 health. " << std::endl;
-                    player.takeDamage(attackPower);
-                    std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                    while(health>0 && player.getHealth()>0){
-                        Techniques = Attack;
-                        player.takeDamage(attackPower);
-                        std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                        TakeDamage(player);}
-                    if(player.getHealth() == 0){
-                        player.setHealth(100);
-                        player.setisPlayernotDead(false);}
-                    health=100;
-                    player.setTankEntered(false);
-                    player.setsniperEntered(false);
-                    player.setIsPermanentItemRequested(false);
-                    player.setIsThrowableItemRequested(false);
-                }
-            }
-            else if (player.getLevel() >= 16) {
-                // Randomly select the attack technique
-                int Randomselection = rand() % 2 + 1;
-                if (Randomselection == 1)
-                {
-
-                    // Use the Attack, Defense, ReturnAttack, and Attack techniques
-
-                    Techniques = Attack;
-                    TakeDamage(player);
-                    Techniques = Defense;
-                    player.takeDamage(attackPower);
-                    std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                    Techniques = ReturnAttack;
-                    player.takeDamage(attackPower);
-                    std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                    TakeDamage(player);
-                    Techniques = Attack;
-                    player.takeDamage(attackPower);
-                    std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                    TakeDamage(player);
-                    Techniques = ReturnAttack;
-                    player.takeDamage(attackPower);
-                    std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                    TakeDamage(player);
-                    while(health>0 && player.getHealth()>0){
-                        Techniques = Attack;
-                        player.takeDamage(attackPower);
-                        std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                        TakeDamage(player);}
-                    if(player.getHealth() == 0){
-                        player.setHealth(100);
-                        player.setisPlayernotDead(false);}
-                    health=100;
-                    player.setTankEntered(false);
-                    player.setsniperEntered(false);
-                    player.setIsPermanentItemRequested(false);
-                    player.setIsThrowableItemRequested(false);
-                }
-                else if (Randomselection == 2) {
-
-                    // Use the Attack, Defense, ReturnAttack, Attack, and Defense techniques
-
-                    Techniques = Attack;
-                    TakeDamage(player);
-                    Techniques = Defense;
-                    player.takeDamage(attackPower);
-                    std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                    TakeDamage(player);
-                    Techniques = ReturnAttack;
-                    player.takeDamage(attackPower);
-                    std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                    TakeDamage(player);
-                    Techniques = Attack;
-                    player.takeDamage(attackPower);
-                    std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                    TakeDamage(player);
-                    Techniques = Defense;
-                    player.takeDamage(attackPower);
-                    std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                    TakeDamage(player);
-                    while(health>0 && player.getHealth()>0){
-                        Techniques = Attack;
-                        player.takeDamage(attackPower);
-                        std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                        TakeDamage(player);}
-                    if(player.getHealth() == 0){
-                        player.setHealth(100);
-                        player.setisPlayernotDead(false);}
-                    health=100;
-                    player.setTankEntered(false);
-                    player.setsniperEntered(false);
-                    player.setIsPermanentItemRequested(false);
-                    player.setIsThrowableItemRequested(false);
-                }
-                else if (player.getLevel() >= 18) {
-
-                    // Use the Attack, ReturnAttack, Defense, ReturnAttack, and Attack techniques
-
-                    Techniques = Attack;
-                    TakeDamage(player);
-                    Techniques = ReturnAttack;
-                    player.takeDamage(attackPower);
-                    std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                    TakeDamage(player);
-                    Techniques = Defense;
-                    player.takeDamage(attackPower);
-                    std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                    TakeDamage(player);
-                    Techniques = ReturnAttack;
-                    player.takeDamage(attackPower);
-                    std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                    TakeDamage(player);
-                    Techniques = Attack;
-                    TakeDamage(player);
-
-                    // Use the Run technique
-                    Techniques = Run;
-                    std::cout << "The human enemy fled to recuperate! But the zombies are coming. " << std::endl;
-                    StrongerZombie.attackPlayer(player);
-                    zombie.attackPlayer(player);
-
-                    // If the zombies are defeated, the human enemy returns with full health
-                    if (StrongerZombie.getHealth() == 0 && zombie.getHealth() == 0) {
-                        player.setLevel(player.getLevel()-2);
-                        Techniques = ComeBack;
-                        health = 100;
-                        std::cout << "Human enemy returned with 100 health. " << std::endl;
-                        player.takeDamage(attackPower);
-                        std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                        Techniques = Defense;
-                        player.takeDamage(attackPower);
-                        std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                        TakeDamage(player);
-                        Techniques = Attack;
-                        TakeDamage(player);
-                        Techniques = ReturnAttack;
-                        player.takeDamage(attackPower);
-                        std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                        TakeDamage(player);
-                        while(health>0 && player.getHealth()>0){
-                            Techniques = Attack;
-                            player.takeDamage(attackPower);
-                            std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;
-                            TakeDamage(player);}
-                        if(player.getHealth() == 0){
-                            player.setHealth(100);
-                            player.setisPlayernotDead(false);}
-                        health=100; 
-                        player.setTankEntered(false);
-                        player.setsniperEntered(false);
-                        player.setIsPermanentItemRequested(false);
-                        player.setIsThrowableItemRequested(false);
-                    }
-                }
-            }
-        }
-    }
-};
-
-
-
-class RandomAttack {
-public:
-    // Function to perform random attack
-    static void performRandomAttack(PlayerCharacter& player, ZombieCharacter& zombie, StrongerZombieCharacter& strongerZombie, HumanEnemy& enemy) {
-        int randomEnemy = rand() % 3; // Randomly select an enemy to attack
-
-        if (randomEnemy == 0 && player.getLevel() < 12) {
-            // Attack the player with a zombie
-            zombie.attackPlayer(player);
-        }
-        else if (randomEnemy == 1 && player.getLevel() < 12) {
-            // Attack the player with a stronger zombie
-            strongerZombie.attackPlayer(player);
-        }
-        else if (randomEnemy == 2 && player.getLevel() >= 8 && player.getLevel() < 12) {
-            // Attack the player with a Human Enemy
-            enemy.attackPlayerCharacter(player, strongerZombie, zombie);
-        }
-        else if (player.getLevel() >= 12) {
-            // Attack the player with a Human Enemy
-            enemy.attackPlayerCharacter(player, strongerZombie, zombie);
-        }
-
-
-    }
-
-};
-
 class Shop{
     public :
-    void Buy(PlayerCharacter& player, ZombieCharacter& zombie, StrongerZombieCharacter& strongerZombie, HumanEnemy& enemy){
+    void Buy(PlayerCharacter& player){
         int price, SelectionNumber;
         std::cout<<"Store Menu :"<<std::endl;
         std::cout<<"1. Item :"<<std::endl;
@@ -920,8 +260,8 @@ class Shop{
         std::cout<<"itemName = Grenade / Damage:20 / price:40 coin"<<std::endl;
         std::cout<<"itemName = Chemicalgas / Damage:40 / price:60 coin"<<std::endl;
         std::cout<<"itemName = Fireball / Damage:25 / price:45 coin"<<std::endl;
-        std::cout<<"2. Food & Drink"<<std::endl;
-        std::cout<<"foodName = Pizzaa / Energy:30 / price:30 coin"<<std::endl;
+        std::cout<<"2. Food & Drink(food to increase health and drink to increase energy)"<<std::endl;
+        std::cout<<"foodName = Pizza / Energy:30 / price:30 coin"<<std::endl;
         std::cout<<"foodName = Dizi / Energy:35 / price:35 coin"<<std::endl;
         std::cout<<"foodName = Sambouse / Energy:30 / price:30 coin"<<std::endl;
         std::cout<<"drinkName = Redbull / Energy:30 / price:30 coin"<<std::endl;
@@ -934,7 +274,6 @@ class Shop{
         std::cout<<"Enter your choice to buy : ";
         std::cin>>SelectionNumber;
         std::cout<<std::endl;
-        RandomAttack attack;
         switch (SelectionNumber) {
     case 1: {
             // Get character's selected Item
@@ -943,6 +282,11 @@ class Shop{
             std::cin >> SelectedItem;
             if (SelectedItem == "Bomb") {
                 if(player.getcoin()>=50){
+                    std::cout << "_____" << std::endl;
+                    std::cout << "\\    \\____________" << std::endl;
+                    std::cout << " \\     MK81        \\" << std::endl;
+                    std::cout << " /    ____________ /" << std::endl;
+                    std::cout << "/____/" << std::endl;
                     player.setcoin(player.getcoin()-50);
                     std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;
                     player.setSelectedItem(SelectedItem);
@@ -952,6 +296,11 @@ class Shop{
                 std::cout<<"You do not have enough coins to buy this option!"<<std::endl;}
             } else if (SelectedItem == "Grenade") {
                 if(player.getcoin()>=40){
+                    std::cout << "_____" << std::endl;
+                    std::cout << "\\    \\____________" << std::endl;
+                    std::cout << " \\     Grenade     \\" << std::endl;
+                    std::cout << " /    ____________ /" << std::endl;
+                    std::cout << "/____/" << std::endl;
                     player.setcoin(player.getcoin()-40);
                     std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;
                     player.setSelectedItem(SelectedItem);
@@ -961,6 +310,11 @@ class Shop{
                 std::cout<<"You do not have enough coins to buy this option!"<<std::endl;}
             } else if (SelectedItem == "Chemicalgas") {
                 if(player.getcoin()>=60){
+                    std::cout << "_____" << std::endl;
+                    std::cout << "\\    \\_____________" << std::endl;
+                    std::cout << " \\    ChemicalGas  \\" << std::endl;
+                    std::cout << " /    ____________ /" << std::endl;
+                    std::cout << "/____/" << std::endl;
                     player.setcoin(player.getcoin()-60);
                     std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;
                     player.setSelectedItem(SelectedItem);
@@ -970,6 +324,11 @@ class Shop{
                 std::cout<<"You do not have enough coins to buy this option!"<<std::endl;}
             } else if (SelectedItem == "Fireball") {
                 if(player.getcoin()>=45){
+                std::cout << "_____" << std::endl;
+                std::cout << "\\    \\_____________" << std::endl;
+                std::cout << " \\    Fireball      \\" << std::endl;
+                std::cout << " /    ____________ /" << std::endl;
+                std::cout << "/____/" << std::endl;
                     player.setcoin(player.getcoin()-45);
                     std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;
                     player.setSelectedItem(SelectedItem);
@@ -984,7 +343,7 @@ class Shop{
             std::string SelectedFood;
             std::cout << "Enter character's selected Food or Drink (Pizzaa/Dizi/Sambouse/Redbull/Mangosmoothie/Late): \n";
             std::cin>>SelectedFood;
-            if (SelectedFood == "Pizzaa") {
+            if (SelectedFood == "Pizza") {
                 if(player.getcoin()>=30){
                     player.setcoin(player.getcoin()-30);
                     std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;
@@ -1079,7 +438,6 @@ class Shop{
         }
         case 6: {
             std::cout << "Leaving The Store..." << std::endl;
-            exit(0);
             break;
         }
         default:
@@ -1090,16 +448,802 @@ class Shop{
     }
 };
 
+class ZombieCharacter {
+protected:
+    int health = 100;
+    int attackPower;
+
+public:
+    // Constructor
+    ZombieCharacter() {
+        // Setting the attack power to a random number between 10 and 20
+        attackPower = rand() % 11 + 10;
+    }
+
+    int getHealth() const { return health; }
+
+    void takedamage(PlayerCharacter& player, Shop& shop) {
+        if(player.getHealth()>0){
+            if(player.getTankEntered()){
+                health -= 100;
+                std::cout << "Tank entered the game and reduced Enemy Health by 100!"<< std::endl;
+                if (health <= 0) {
+                    health = 0;
+                    std::cout<< "The health of the zombie enemy is : " << health << " "<< std::endl;
+                    std::cout << "you won! The zombie enemy character was killed. " << std::endl;
+                    player.setLevel(player.getLevel()+1);
+                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
+                    player.setHealth(player.getHealth()+30);
+                    if(player.getHealth()>100){
+                        player.setHealth(100);
+                    }
+                    std::cout<<"Increase player health by 30. "<<"Player Health: " << player.getHealth() << std::endl;
+                    player.setcoin(player.getcoin()+30);
+                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
+                    player.setTankEntered(false);
+            }
+            if(player.getsniperEntered()){
+                health -= 50;
+                std::cout << "Sniper entered the game and reduced Enemy Health by 50!"<< std::endl;
+                if(health>0){
+                    std::cout<< "The health of the zombie enemy is : " << health << " "<< std::endl; 
+                }
+                else if (health <= 0 ) {
+                    health = 0;
+                    std::cout<< "The health of the zombie enemy is : " << health << " "<< std::endl;
+                    std::cout << "you won! The zombie enemy character was killed. " << std::endl;
+                    player.setLevel(player.getLevel()+1);
+                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
+                    player.setHealth(player.getHealth()+30);
+                    if(player.getHealth()>100){
+                        player.setHealth(100);
+                    }
+                    std::cout<<"Increase player health by 30. "<<"Player Health: " << player.getHealth() << std::endl;
+                    player.setcoin(player.getcoin()+30);
+                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
+                    player.setsniperEntered(false);
+                }
+            if(player.getIsPermanentItemRequested()){ 
+                health -= player.PermanentItem(player.getSelectedWeapon());
+                if (player.getSelectedWeapon() == "Shotgun") {
+                    std::cout << "        _________________" << std::endl;
+                    std::cout << "_____ /   Shotgun_____ /" << std::endl;
+                    std::cout << "\\______/ \\/" << std::endl;
+                } else if (player.getSelectedWeapon() == "Machine Gun") {
+                    std::cout << "        _________________" << std::endl;
+                    std::cout << "_____ /   MachinGun_____ /" << std::endl;
+                    std::cout << "\\______/ \\/" << std::endl;
+                    std::cout<<"           |\\"<<std::endl;
+                } else if (player.getSelectedWeapon() == "Is50") {
+                    std::cout << "        _________________" << std::endl;
+                    std::cout << "_____ /   IS50_________ /" << std::endl;
+                    std::cout << "\\______/ \\/" << std::endl;
+                } else if (player.getSelectedWeapon() == "M16") {
+                    std::cout << "        _________________" << std::endl;
+                    std::cout << "_____ /   M16 _________ /" << std::endl;
+                    std::cout << "\\______/ \\/" << std::endl;
+                }
+                std::cout << "You attacked the zombie enemy for " << player.PermanentItem(player.getSelectedWeapon()) << " damage with SelectedWeapon !"<< std::endl;
+                if(health>0){
+                    std::cout<< "The health of the zombie enemy is : " << health << " "<< std::endl; 
+                }
+                else if (health <= 0 ) {
+                    health = 0;
+                    std::cout<< "The health of the zombie enemy is : " << health << " "<< std::endl;
+                    std::cout << "you won! The zombie enemy character was killed. " << std::endl;
+                    player.setLevel(player.getLevel()+1);
+                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
+                    player.setHealth(player.getHealth()+30);
+                    if(player.getHealth()>100){
+                        player.setHealth(100);
+                    }
+                    std::cout<<"Increase player health by 30. "<<"Player Health: " << player.getHealth() << std::endl;
+                    player.setcoin(player.getcoin()+30);
+                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
+                    player.setIsPermanentItemRequested(false);
+                }
+            if(player.getIsThrowableItemRequested()){ 
+                health -= player.ThrowableItem(player.getSelectedItem()); 
+                std::cout << "You attacked the zombie enemy for " << player.ThrowableItem(player.getSelectedItem()) << " damage with SelectedItem !"<< std::endl;
+                if(health>0){
+                    std::cout<< "The health of the zombie enemy is : " << health << " "<< std::endl; 
+                }
+                else if (health <= 0 ) {
+                    health = 0;
+                    std::cout<< "The health of the zombie enemy is : " << health << " "<< std::endl;
+                    std::cout << "you won! The zombie enemy character was killed. " << std::endl;
+                    player.setLevel(player.getLevel()+1);
+                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
+                    player.setHealth(player.getHealth()+30);
+                    if(player.getHealth()>100){
+                        player.setHealth(100);
+                    }
+                    std::cout<<"Increase player health by 30. "<<"Player Health: " << player.getHealth() << std::endl;
+                    player.setcoin(player.getcoin()+30);
+                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
+                    player.setIsThrowableItemRequested(false);
+                }
+                if(player.getISAttackPowerRequested()){
+            health -= player.getPlayerattackPower();
+            std::cout << "You attacked the zombie enemy for " << player.getPlayerattackPower() << " damage !";
+            if(health>0){
+                std::cout<< "The health of the zombie enemy is : " << health << " "<< std::endl; 
+            }
+            else if (health <= 0 ) {
+                health = 0;
+                std::cout<< "The health of the zombie enemy is : " << health << " "<< std::endl;
+                std::cout << "you won! The zombie enemy character was killed. " << std::endl;
+                player.setLevel(player.getLevel()+1);
+                std::cout<<"player level : "<<player.getLevel()<<std::endl;
+                player.setHealth(player.getHealth()+30);
+                if(player.getHealth()>100){
+                        player.setHealth(100);
+                    }
+                std::cout<<"Increase player health by 30. "<<"Player Health: " << player.getHealth() << std::endl;
+                player.setcoin(player.getcoin()+30);
+                std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
+                }
+        }
+    }
+
+    // Function for attack a player
+    void attackPlayer(PlayerCharacter& player, Shop& shop) {
+        // Reduce player's health by the attack power of the zombie
+        std::cout << std::endl << "Information about the Zombie Enemy : " << std::endl;
+        std::cout << "Name: Zombie Enemy" << std::endl;
+        std::cout << "Health: " << health << std::endl;
+        while(health > 0 && player.getHealth()>0){
+        std::cout<<"It is the player's turn to attack the enemy. Attack menu :"<<std::endl;
+        std::cout<<"1. Attack power"<<std::endl;
+        std::cout<<"2. Permanent weapon"<<std::endl;
+        std::cout<<"3. Buy items from the shop"<<std::endl;
+        int choice;
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+        switch (choice) {
+            case 1: {
+                player.setISAttackPowerRequested(true);
+                takedamage(player, shop);
+                break;
+            }
+            case 2: {
+                std::cout << "Enter character's selected weapon (M16 ,power:30/Is50 ,power:30/Shotgun ,power:35/Machine Gun ,power:50): ";
+                std::string selectedWeapon;
+                std::cin >> selectedWeapon;
+                player.setSelectedWeapon(selectedWeapon);
+                player.setIsPermanentItemRequested(true);
+                takedamage(player, shop);
+                break;
+            }
+            case 3: {
+                shop.Buy(player);
+                takedamage(player, shop);
+                break;
+            }
+            default:
+                std::cout << "Invalid choice. Please try again." << std::endl;
+                break;
+        }
+        if(getHealth()>0){
+        std::cout<<"It is the enemy's turn to attack"<<std::endl;
+        player.takeDamage(attackPower);
+        std::cout << "Zombie attacked Player for " << attackPower << " damage." << std::endl;}
+        }
+        if(player.getHealth() == 0){
+            player.setHealth(100);
+        }
+        health=100;
+    }
+};
+
+class StrongerZombieCharacter : public ZombieCharacter {
+public:
+    // Constructor
+    StrongerZombieCharacter() {
+        // setting attack power to a random number between 35 and 45
+        attackPower = rand() % 11 + 35;
+    }
+
+    void takedamage(PlayerCharacter& player, Shop& shop) {
+        if(player.getHealth()>0){
+            if(player.getTankEntered()){
+                health -= 100;
+                std::cout << "Tank entered the game and reduced Enemy Health by 100!"<< std::endl;
+                if (health <= 0) {
+                    health = 0;
+                    std::cout<<" The health of the stronger zombie enemy is : " << health << " " << std::endl;
+                    std::cout << "you won! The stronger zombie enemy character was killed. " << std::endl;
+                    player.setLevel(player.getLevel()+1);
+                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
+                    player.setHealth(player.getHealth()+40);
+                    if(player.getHealth()>100){
+                        player.setHealth(100);
+                    }
+                    std::cout<<"Increase player health by 40. "<<"Player Health: " << player.getHealth() << std::endl;
+                    player.setcoin(player.getcoin()+50);
+                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
+                    player.setTankEntered(false);
+            }
+            if(player.getsniperEntered()){
+                health -= 50;
+                std::cout << "Sniper entered the game and reduced Enemy Health by 50!"<< std::endl;
+                if(health>0){
+                    std::cout<<" The health of the stronger zombie enemy is : " << health << " " << std::endl;
+                }
+                else if (health <= 0) {
+                    health = 0;
+                    std::cout<<" The health of the stronger zombie enemy is : " << health << " " << std::endl;
+                    std::cout << "you won! The stronger zombie enemy character was killed. " << std::endl;
+                    player.setLevel(player.getLevel()+1);
+                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
+                    player.setHealth(player.getHealth()+40);
+                    if(player.getHealth()>100){
+                        player.setHealth(100);
+                    }
+                    std::cout<<"Increase player health by 40. "<<"Player Health: " << player.getHealth() << std::endl;
+                    player.setcoin(player.getcoin()+50);
+                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
+                    player.setsniperEntered(false);
+            }
+            if(player.getIsPermanentItemRequested()){
+                health -= player.PermanentItem(player.getSelectedWeapon());
+                if (player.getSelectedWeapon() == "Shotgun") {
+                    std::cout << "        _________________" << std::endl;
+                    std::cout << "_____ /   Shotgun_____ /" << std::endl;
+                    std::cout << "\\______/ \\/" << std::endl;
+                } else if (player.getSelectedWeapon() == "Machine Gun") {
+                    std::cout << "        _________________" << std::endl;
+                    std::cout << "_____ /   MachinGun_____ /" << std::endl;
+                    std::cout << "\\______/ \\/" << std::endl;
+                    std::cout<<"           |\\"<<std::endl;
+                } else if (player.getSelectedWeapon() == "Is50") {
+                    std::cout << "        _________________" << std::endl;
+                    std::cout << "_____ /   IS50_________ /" << std::endl;
+                    std::cout << "\\______/ \\/" << std::endl;
+                } else if (player.getSelectedWeapon() == "M16") {
+                    std::cout << "        _________________" << std::endl;
+                    std::cout << "_____ /   M16 _________ /" << std::endl;
+                    std::cout << "\\______/ \\/" << std::endl;
+                }
+                std::cout << "You attacked the stronger zombie enemy for " << player.PermanentItem(player.getSelectedWeapon())<< " damage with SelectedWeapon !" << std::endl;
+                if(health>0){
+                    std::cout<<" The health of the stronger zombie enemy is : " << health << " " << std::endl;
+                }
+                else if (health <= 0) {
+                    health = 0;
+                    std::cout<<" The health of the stronger zombie enemy is : " << health << " " << std::endl;
+                    std::cout << "you won! The stronger zombie enemy character was killed. " << std::endl;
+                    player.setLevel(player.getLevel()+1);
+                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
+                    player.setHealth(player.getHealth()+40);
+                    if(player.getHealth()>100){
+                        player.setHealth(100);
+                    }
+                    std::cout<<"Increase player health by 40. "<<"Player Health: " << player.getHealth() << std::endl;
+                    player.setcoin(player.getcoin()+50);
+                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
+                    player.setIsPermanentItemRequested(false);
+                } 
+            if(player.getIsThrowableItemRequested()){
+                health -= player.ThrowableItem(player.getSelectedItem()); 
+                std::cout << "You attacked the stronger zombie enemy for "<< player.ThrowableItem(player.getSelectedItem()) << " damage with SelectedItem !" << std::endl;
+                if(health>0){
+                    std::cout<<" The health of the stronger zombie enemy is : " << health << " " << std::endl;
+                }
+                else if (health <= 0) {
+                    health = 0;
+                    std::cout<<" The health of the stronger zombie enemy is : " << health << " " << std::endl;
+                    std::cout << "you won! The stronger zombie enemy character was killed. " << std::endl;
+                    player.setLevel(player.getLevel()+1);
+                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
+                    player.setHealth(player.getHealth()+40);
+                    if(player.getHealth()>100){
+                        player.setHealth(100);
+                    }
+                    std::cout<<"Increase player health by 40. "<<"Player Health: " << player.getHealth() << std::endl;
+                    player.setcoin(player.getcoin()+50);
+                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
+                    player.setIsThrowableItemRequested(false);
+            }
+            if(player.getISAttackPowerRequested()){
+            health -= player.getPlayerattackPower();
+            std::cout << "You attacked the stronger zombie enemy for " << player.getPlayerattackPower() << " damage !";
+            if(health>0){
+                std::cout<<" The health of the stronger zombie enemy is : " << health << " " << std::endl;
+            }
+            else if (health <= 0) {
+                health = 0;
+                std::cout<<" The health of the stronger zombie enemy is : " << health << " " << std::endl;
+                std::cout << "you won! The stronger zombie enemy character was killed. " << std::endl;
+                player.setLevel(player.getLevel()+1);
+                std::cout<<"player level : "<<player.getLevel()<<std::endl;
+                player.setHealth(player.getHealth()+40);
+                if(player.getHealth()>100){
+                        player.setHealth(100);
+                    }
+                    std::cout<<"Increase player health by 40. "<<"Player Health: " << player.getHealth() << std::endl;
+                player.setcoin(player.getcoin()+50);
+                std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
+            }
+        }
+    }
+
+
+    // Function for attack a player
+    void attackPlayer(PlayerCharacter& player, Shop& shop) {
+        // Reduce player's health by the attack power of the stronger zombie 
+        std::cout << std::endl << "Information about the Stronger Zombie Enemy : " << std::endl;
+        std::cout << "Name: Stronger Zombie Enemy" << std::endl;
+        std::cout << "Health: " << health << std::endl;
+        while(health > 0 && player.getHealth()>0){
+        std::cout<<"It is the player's turn to attack the enemy. Attack menu :"<<std::endl;
+        std::cout<<"1. Attack power"<<std::endl;
+        std::cout<<"2. Permanent weapon"<<std::endl;
+        std::cout<<"3. Buy items from the shop"<<std::endl;
+        int choice;
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+        switch (choice) {
+            case 1: {
+                player.setISAttackPowerRequested(true);
+                takedamage(player, shop);
+                break;
+            }
+            case 2: {
+                std::cout << "Enter character's selected weapon (M16 ,power:30/Is50 ,power:30/Shotgun ,power:35/Machine Gun ,power:50): ";
+                std::string selectedWeapon;
+                std::cin >> selectedWeapon;
+                player.setSelectedWeapon(selectedWeapon);
+                player.setIsPermanentItemRequested(true);
+                takedamage(player, shop);
+                break;
+            }
+            case 3: {
+                shop.Buy(player);
+                takedamage(player, shop);
+                break;
+            }
+            default:
+                std::cout << "Invalid choice. Please try again." << std::endl;
+                break;
+        }
+        if(getHealth()>0){
+        std::cout<<"It is the enemy's turn to attack"<<std::endl;
+        player.takeDamage(attackPower);
+        std::cout << "Stronger Zombie attacked Player for " << attackPower << " damage." << std::endl;}
+        }
+        if(player.getHealth() == 0){
+            player.setHealth(100);
+        }
+        health=100;
+    }
+};
+
+
+class HumanEnemy : public Character {
+protected:
+    int attackPower;
+public:
+    HumanEnemy() : Character("HumanEnemy", rand() % 10 + 20, rand() % 2 == 0 ? "Male" : "Female") {
+        warmWeaponSkill = rand() % 41 + 30;
+        coldWeaponSkill = rand() % 41 + 30;
+        attackPower = rand() % 11 + 45;
+    }
+
+    void TakeDamage(PlayerCharacter& player,Shop& shop) {
+        if(player.getHealth()>0){
+            if(player.getTankEntered()){
+                health -= 100;
+                std::cout << "Tank entered the game and reduced Enemy Health by 100!"<< std::endl;
+                if (health <= 0) {
+                    health = 0;
+                    std::cout<<" The health of the human enemy is : " << health << " " << std::endl;
+                    std::cout << "you won! The human enemy character was killed. " << std::endl;
+                    player.setLevel(player.getLevel()+1);
+                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
+                    player.setHealth(player.getHealth()+50);
+                    if(player.getHealth()>100){
+                        player.setHealth(100);
+                    }
+                    std::cout<<"Increase player health by 50. "<<"Player Health: " << player.getHealth() << std::endl;
+                    player.setcoin(player.getcoin()+70);
+                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
+                    player.setTankEntered(false);
+            }
+            if(player.getsniperEntered()){
+                health -= 50;
+                std::cout << "Sniper entered the game and reduced Enemy Health by 50!"<< std::endl;
+                if(health>0){
+                    std::cout<<" The health of the human enemy is : " << health << " " << std::endl;
+                }
+                else if (health <= 0 && player.getHealth()>0) {
+                    health = 0;
+                    std::cout<<" The health of the human enemy is : " << health << " " << std::endl;
+                    std::cout << "you won! The human enemy character was killed. " << std::endl;
+                    player.setLevel(player.getLevel()+1);
+                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
+                    player.setHealth(player.getHealth()+50);
+                    if(player.getHealth()>100){
+                        player.setHealth(100);
+                    }
+                    std::cout<<"Increase player health by 50. "<<"Player Health: " << player.getHealth() << std::endl;
+                    player.setcoin(player.getcoin()+70);
+                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
+                    player.setsniperEntered(false);
+            }
+            if(player.getIsPermanentItemRequested()){
+                health -= player.PermanentItem(player.getSelectedWeapon());
+                if (player.getSelectedWeapon() == "Shotgun") {
+                    std::cout << "        _________________" << std::endl;
+                    std::cout << "_____ /   Shotgun_____ /" << std::endl;
+                    std::cout << "\\______/ \\/" << std::endl;
+                } else if (player.getSelectedWeapon() == "Machine Gun") {
+                    std::cout << "        _________________" << std::endl;
+                    std::cout << "_____ /   MachinGun_____ /" << std::endl;
+                    std::cout << "\\______/ \\/" << std::endl;
+                    std::cout<<"           |\\"<<std::endl;
+                } else if (player.getSelectedWeapon() == "Is50") {
+                    std::cout << "        _________________" << std::endl;
+                    std::cout << "_____ /   IS50_________ /" << std::endl;
+                    std::cout << "\\______/ \\/" << std::endl;
+                } else if (player.getSelectedWeapon() == "M16") {
+                    std::cout << "        _________________" << std::endl;
+                    std::cout << "_____ /   M16 _________ /" << std::endl;
+                    std::cout << "\\______/ \\/" << std::endl;
+                }
+                std::cout << "You attacked the Human Enemy for " << player.PermanentItem(player.getSelectedWeapon())<< " damage with SelectedWeapon ! "<< std::endl;
+                if(health>0){
+                    std::cout<<" The health of the human enemy is : " << health << " " << std::endl;
+                }
+                else if (health <= 0 && player.getHealth()>0) {
+                    health = 0;
+                    std::cout<<" The health of the human enemy is : " << health << " " << std::endl;
+                    std::cout << "you won! The human enemy character was killed. " << std::endl;
+                    player.setLevel(player.getLevel()+1);
+                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
+                    player.setHealth(player.getHealth()+50);
+                    if(player.getHealth()>100){
+                        player.setHealth(100);
+                    }
+                    std::cout<<"Increase player health by 50. "<<"Player Health: " << player.getHealth() << std::endl;
+                    player.setcoin(player.getcoin()+70);
+                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
+                    player.setIsPermanentItemRequested(false);
+                } 
+            if(player.getIsThrowableItemRequested()){
+                health -= player.ThrowableItem(player.getSelectedItem()); 
+                std::cout << "You attacked the Human Enemy for "<< player.ThrowableItem(player.getSelectedItem()) << " damage with SelectedItem ! "<< " " << std::endl;
+                if(health>0){
+                    std::cout<<" The health of the human enemy is : " << health << " " << std::endl;
+                }
+                else if (health <= 0 && player.getHealth()>0) {
+                    health = 0;
+                    std::cout<<" The health of the human enemy is : " << health << " " << std::endl;
+                    std::cout << "you won! The human enemy character was killed. " << std::endl;
+                    player.setLevel(player.getLevel()+1);
+                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
+                    player.setHealth(player.getHealth()+50);
+                    if(player.getHealth()>100){
+                        player.setHealth(100);
+                    }
+                    std::cout<<"Increase player health by 50. "<<"Player Health: " << player.getHealth() << std::endl;
+                    player.setcoin(player.getcoin()+70);
+                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;}
+                    player.setIsThrowableItemRequested(false);
+                }
+        }
+        if (Techniques == Attack || Techniques == ComeBack)
+        {
+            if(player.getISAttackPowerRequested()){
+            health -= player.getPlayerattackPower();
+            if (health < 100 && player.getHealth()>0) {
+                std::cout << "You attacked the human enemy for " << player.getPlayerattackPower() << " damage !";
+                if(health>0){
+                    std::cout<<" The health of the human enemy is : " << health << " " << std::endl;
+                }
+                else if (health <= 0 && player.getHealth()>0) {
+                    health = 0;
+                    std::cout<<" The health of the human enemy is : " << health << " " << std::endl;
+                    std::cout << "you won! The human enemy character was killed. " << std::endl;
+                    player.setLevel(player.getLevel()+1);
+                    std::cout<<"player level : "<<player.getLevel()<<std::endl;
+                    player.setHealth(player.getHealth()+50);
+                    if(player.getHealth()>100){
+                        player.setHealth(100);
+                    }
+                    std::cout<<"Increase player health by 50. "<<"Player Health: " << player.getHealth() << std::endl;
+                    player.setcoin(player.getcoin()+70);
+                    std::cout<<"Number of coin : "<<player.getcoin()<<std::endl;
+                }
+            }
+            }
+        }
+        else if (Techniques == ReturnAttack) {
+            if(player.getISAttackPowerRequested()){
+            player.setHealth(player.getHealth() - player.getPlayerattackPower());
+            std::cout << "oops! Human Enemy return the attack to the player with a strength of " << player.getPlayerattackPower() << ". " << std::endl;}
+        }
+        else if (Techniques == Defense) {
+            if(player.getISAttackPowerRequested()){
+            health = health;
+            std::cout << "oops! The human enemy defended the player's attack. " << std::endl;}
+        }
+    }
+    void attack(PlayerCharacter& player, StrongerZombieCharacter& StrongerZombie, ZombieCharacter& zombie, Shop& shop){
+        std::cout<<"It is the player's turn to attack the enemy. Attack menu :"<<std::endl;
+                std::cout<<"1. Attack power"<<std::endl;
+                std::cout<<"2. Permanent weapon"<<std::endl;
+                std::cout<<"3. Buy items from the shop"<<std::endl;
+                int choice;
+                std::cout << "Enter your choice: ";
+                std::cin >> choice;
+                switch (choice) {
+                    case 1: {
+                        player.setISAttackPowerRequested(true);
+                        TakeDamage(player, shop);
+                        break;
+                    }
+                    case 2: {
+                        std::cout << "Enter character's selected weapon (M16 ,power:30/Is50 ,power:30/Shotgun ,power:35/Machine Gun ,power:50): ";
+                        std::string selectedWeapon;
+                        std::cin >> selectedWeapon;
+                        player.setSelectedWeapon(selectedWeapon);
+                        player.setIsPermanentItemRequested(true);
+                        TakeDamage(player, shop);
+                        break;
+                    }
+                    case 3: {
+                        shop.Buy(player);
+                        TakeDamage(player, shop);
+                        break;
+                    }
+                    default:
+                        std::cout << "Invalid choice. Please try again." << std::endl;
+                        break;
+                }
+                if(getHealth()>0){
+                std::cout<<"It is the enemy's turn to attack"<<std::endl;
+                player.takeDamage(attackPower);
+                std::cout << "Human Enemy attacked Player for " << attackPower << " damage." << std::endl;}
+    }
+    void attackPlayerCharacter(PlayerCharacter& player, StrongerZombieCharacter& StrongerZombie, ZombieCharacter& zombie, Shop& shop) {
+        int determinative;
+
+        // Display information about the human enemy
+        std::cout << std::endl << "Information about the human enemy : " << std::endl;
+        std::cout << "Name: " << name << std::endl;
+        std::cout << "Age: " << age << std::endl;
+        std::cout << "Gender: " << gender << std::endl;
+        std::cout << "Health: " << health << std::endl;
+
+        // Wait for 1/6 minute before determining the attack technique
+        auto startTime = std::chrono::high_resolution_clock::now();
+        std::this_thread::sleep_for(std::chrono::minutes(1 / 6));
+        auto endTime = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::minutes>(endTime - startTime);
+        if (duration.count() >= 1 / 6) {
+            determinative = 1;
+        }
+
+        // Determine the attack technique based on the player's level
+        if (determinative == 1)
+        {
+            if (player.getLevel() >= 8 && player.getLevel() <= 9) {
+                // Use the Attack technique
+                while(health>0 && player.getHealth()>0){
+                    Techniques = Attack;
+                    attack(player, StrongerZombie, zombie, shop);}
+                if(player.getHealth() == 0){
+                    player.setHealth(100);
+                }
+                health=100;
+
+            }
+            else if (player.getLevel() >= 10) {
+                // Use the Defense technique
+                Techniques = Defense;
+                attack(player, StrongerZombie, zombie, shop);
+
+                // Use the Attack technique
+                while(health>0 && player.getHealth()>0){
+                    Techniques = Attack;
+                    attack(player, StrongerZombie, zombie, shop);}
+                if(player.getHealth() == 0){
+                    player.setHealth(100);
+                }
+                health=100;
+            }
+            else if (player.getLevel() >= 12) {
+                Techniques = Defense;
+                attack(player, StrongerZombie, zombie, shop);
+
+                // Use the ReturnAttack technique
+                Techniques = ReturnAttack;
+                attack(player, StrongerZombie, zombie, shop);
+
+                // Use the Attack technique
+                while(health>0 && player.getHealth()>0){
+                    Techniques = Attack;
+                    attack(player, StrongerZombie, zombie, shop);}
+                if(player.getHealth() == 0){
+                    player.setHealth(100);
+                }
+                health=100;
+            }
+            else if (player.getLevel() >= 14) {
+                // Use the Attack technique
+                Techniques = Attack;
+                attack(player, StrongerZombie, zombie, shop);
+
+                // Use the Run technique
+                Techniques = Run;
+                std::cout << "The human enemy fled to recuperate! But the zombies are coming. " << std::endl;
+
+                // Randomly select a zombie to attack the player
+                int RandomSelection = rand() % 2;
+                if (RandomSelection == 0) {
+                    StrongerZombie.attackPlayer(player, shop);
+                }
+                else if (RandomSelection == 1) { zombie.attackPlayer(player, shop); }
+
+                // If the zombies are defeated, the human enemy returns with full health
+                if (StrongerZombie.getHealth() == 0 || zombie.getHealth() == 0)
+                {
+                    player.setLevel(player.getLevel()-1);
+                    Techniques = ComeBack;
+                    health = 100;
+                    std::cout << "Human enemy returned with 100 health. " << std::endl;
+                    attack(player, StrongerZombie, zombie, shop);
+                    while(health>0 && player.getHealth()>0){
+                        Techniques = Attack;
+                        attack(player, StrongerZombie, zombie, shop);}
+                    if(player.getHealth() == 0){
+                        player.setHealth(100);
+                    }
+                    health=100;
+                }
+            }
+            else if (player.getLevel() >= 16) {
+                // Randomly select the attack technique
+                int Randomselection = rand() % 2 + 1;
+                if (Randomselection == 1)
+                {
+
+                    // Use the Attack, Defense, ReturnAttack, and Attack techniques
+
+                    Techniques = Attack;
+                    attack(player, StrongerZombie, zombie, shop);
+                    Techniques = Defense;
+                    attack(player, StrongerZombie, zombie, shop);
+                    Techniques = ReturnAttack;
+                    attack(player, StrongerZombie, zombie, shop);
+                    Techniques = Attack;
+                    attack(player, StrongerZombie, zombie, shop);
+                    Techniques = ReturnAttack;
+                    attack(player, StrongerZombie, zombie, shop);
+                    while(health>0 && player.getHealth()>0){
+                        Techniques = Attack;
+                        attack(player, StrongerZombie, zombie, shop);}
+                    if(player.getHealth() == 0){
+                        player.setHealth(100);
+                    }
+                    health=100;
+                }
+                else if (Randomselection == 2) {
+
+                    // Use the Attack, Defense, ReturnAttack, Attack, and Defense techniques
+
+                    Techniques = Attack;
+                    attack(player, StrongerZombie, zombie, shop);
+                    Techniques = Defense;
+                    attack(player, StrongerZombie, zombie, shop);
+                    Techniques = ReturnAttack;
+                    attack(player, StrongerZombie, zombie, shop);
+                    Techniques = Attack;
+                    attack(player, StrongerZombie, zombie, shop);
+                    Techniques = Defense;
+                    attack(player, StrongerZombie, zombie, shop);
+                    while(health>0 && player.getHealth()>0){
+                        Techniques = Attack;
+                        attack(player, StrongerZombie, zombie, shop);}
+                    if(player.getHealth() == 0){
+                        player.setHealth(100);
+                    }
+                    health=100;
+                }
+                else if (player.getLevel() >= 18) {
+
+                    // Use the Attack, ReturnAttack, Defense, ReturnAttack, and Attack techniques
+
+                    Techniques = Attack;
+                    attack(player, StrongerZombie, zombie, shop);
+                    Techniques = ReturnAttack;
+                    attack(player, StrongerZombie, zombie, shop);
+                    Techniques = Defense;
+                    attack(player, StrongerZombie, zombie, shop);
+                    Techniques = ReturnAttack;
+                    attack(player, StrongerZombie, zombie, shop);
+                    Techniques = Attack;
+                    attack(player, StrongerZombie, zombie, shop);
+
+                    // Use the Run technique
+                    Techniques = Run;
+                    std::cout << "The human enemy fled to recuperate! But the zombies are coming. " << std::endl;
+                    StrongerZombie.attackPlayer(player, shop);
+                    zombie.attackPlayer(player, shop);
+
+                    // If the zombies are defeated, the human enemy returns with full health
+                    if (StrongerZombie.getHealth() == 0 && zombie.getHealth() == 0) {
+                        player.setLevel(player.getLevel()-2);
+                        Techniques = ComeBack;
+                        health = 100;
+                        std::cout << "Human enemy returned with 100 health. " << std::endl;
+                        attack(player, StrongerZombie, zombie, shop);
+                        Techniques = Defense;
+                        attack(player, StrongerZombie, zombie, shop);
+                        Techniques = Attack;
+                        attack(player, StrongerZombie, zombie, shop);
+                        Techniques = ReturnAttack;
+                        attack(player, StrongerZombie, zombie, shop);
+                        while(health>0 && player.getHealth()>0){
+                            Techniques = Attack;
+                            attack(player, StrongerZombie, zombie, shop);}
+                        if(player.getHealth() == 0){
+                            player.setHealth(100);
+                        }
+                        health=100; 
+                    }
+                }
+            }
+        }
+    }
+};
+
+
+
+class RandomAttack {
+public:
+    // Function to perform random attack
+    static void performRandomAttack(PlayerCharacter& player, ZombieCharacter& zombie, StrongerZombieCharacter& strongerZombie, HumanEnemy& enemy, Shop& shop) {
+        int randomEnemy = rand() % 3; // Randomly select an enemy to attack
+
+        if (randomEnemy == 0 && player.getLevel() < 12) {
+            // Attack the player with a zombie
+            zombie.attackPlayer(player, shop);
+        }
+        else if (randomEnemy == 1 && player.getLevel() < 12) {
+            // Attack the player with a stronger zombie
+            strongerZombie.attackPlayer(player, shop);
+        }
+        else if (randomEnemy == 2 && player.getLevel() >= 8 && player.getLevel() < 12) {
+            // Attack the player with a Human Enemy
+            enemy.attackPlayerCharacter(player, strongerZombie, zombie, shop);
+        }
+        else if (player.getLevel() >= 12) {
+            // Attack the player with a Human Enemy
+            enemy.attackPlayerCharacter(player, strongerZombie, zombie, shop);
+        }
+
+
+    }
+
+};
+
 void displayMainMenu() {
     std::cout << "Welcome to the game!" << std::endl;
     std::cout << "1. Create Character" << std::endl;
     std::cout << "2. Start Game" << std::endl;
-    std::cout << "3. Store" << std::endl;
-    std::cout << "4. Exit" << std::endl;
+    std::cout << "3. Exit" << std::endl;
+}
+
+void displayMainMenu2() {
+    std::cout<<"1. next level"<<std::endl;
+    std::cout << "2. Change player information" << std::endl;
+    std::cout << "3. Exit" << std::endl;
 }
 
 // Function to handle player's choice
-void handleChoice(PlayerCharacter& player, ZombieCharacter& zombie, StrongerZombieCharacter& strongerZombie, HumanEnemy& enemy) {
+void handleChoice(PlayerCharacter& player, ZombieCharacter& zombie, StrongerZombieCharacter& strongerZombie, HumanEnemy& enemy, Shop& shop) {
     int choice;
     std::cout << "Enter your choice: ";
     std::cin >> choice;
@@ -1121,25 +1265,17 @@ void handleChoice(PlayerCharacter& player, ZombieCharacter& zombie, StrongerZomb
         std::cout << "Enter character's gender (Male/Female): ";
         std::cin >> gender;
 
-        std::cout << "Enter character's selected weapon (M16/Is50/Shotgun/Machine Gun): ";
-        std::cin >> selectedWeapon;
-
-        player = PlayerCharacter(name, age, gender, selectedWeapon);
+        player = PlayerCharacter(name, age, gender);
         std::cout << "Character created successfully!" << std::endl;
         break;
     }
     case 2: {
         
         std::cout << "Starting the game..." << std::endl;
-        RandomAttack::performRandomAttack(player, zombie, strongerZombie, enemy);
+        RandomAttack::performRandomAttack(player, zombie, strongerZombie, enemy, shop);
         break;
     }
     case 3: {
-        Shop shop;
-        shop.Buy(player, zombie, strongerZombie, enemy);
-        break;
-    }
-    case 4: {
        
         std::cout << "Exiting the game..." << std::endl;
         exit(0);
@@ -1152,21 +1288,63 @@ void handleChoice(PlayerCharacter& player, ZombieCharacter& zombie, StrongerZomb
     }
 }       
 
+void handleChoice2(PlayerCharacter& player, ZombieCharacter& zombie, StrongerZombieCharacter& strongerZombie, HumanEnemy& enemy, Shop& shop) {
+    int choice;
+    std::cout << "Enter your choice: ";
+    std::cin >> choice;
+
+    switch (choice) {
+    case 1: {
+        RandomAttack::performRandomAttack(player, zombie, strongerZombie, enemy, shop);
+        break;
+    }
+    case 2: {
+        std::string name, gender, selectedWeapon, selectedItem;
+        int age;
+
+        // Clear the input buffer
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        std::cout << "Enter character's name: ";
+        std::getline(std::cin, name);
+
+        std::cout << "Enter character's age: ";
+        std::cin >> age;
+
+        std::cout << "Enter character's gender (Male/Female): ";
+        std::cin >> gender;
+
+        player = PlayerCharacter(name, age, gender);
+        std::cout << "Character created successfully!" << std::endl;
+        break;
+    }
+    case 3: {
+       
+        std::cout << "Exiting the game..." << std::endl;
+        exit(0);
+        break;
+    }
+      
+    default:
+        std::cout << "Invalid choice. Please try again." << std::endl;
+        break;
+    }
+}       
 
 int main() {
     srand(time(nullptr));
 
-    PlayerCharacter player("Default", 20, "Male", "M16");
+    PlayerCharacter player("Default", 20, "Male");
     ZombieCharacter zombie;
     StrongerZombieCharacter strongerZombie;
-    HumanEnemy enemy; 
-
+    HumanEnemy enemy;
+    Shop shop;
+    displayMainMenu();
+    handleChoice(player, zombie, strongerZombie, enemy, shop);
     while (true) {
-        displayMainMenu();
-        handleChoice(player, zombie, strongerZombie, enemy);
-        if (player.getHealth() <= 0) {
-            break;
-        }
+        displayMainMenu2();
+        handleChoice2(player, zombie, strongerZombie, enemy, shop);
+        handleChoice(player, zombie, strongerZombie, enemy, shop);
     }
 
     return 0;
